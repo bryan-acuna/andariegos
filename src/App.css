@@ -1,0 +1,48 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #333;
+}
+
+.navbar a {
+  color: #888;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  transition: color 0.2s;
+}
+
+.navbar a:hover {
+  color: #fff;
+}
+
+.navbar a.active {
+  color: #646cff;
+}
+
+.page {
+  padding: 2rem;
+}
+
+.page h1 {
+  margin-bottom: 1rem;
+}
+
+.page ul {
+  list-style: none;
+  padding: 0;
+}
+
+.page li {
+  margin: 0.5rem 0;
+}
