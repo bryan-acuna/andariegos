@@ -1,14 +1,14 @@
 .slideshow {
   margin-top: 2rem;
   position: relative;
-  max-width: 800px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .slideshow-image {
   width: 100%;
-  height: 500px;
+  height: 700px;
   object-fit: cover;
   border-radius: 8px;
 }

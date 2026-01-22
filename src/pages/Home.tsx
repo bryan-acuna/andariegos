@@ -21,8 +21,8 @@ function Home() {
 
   return (
     <div className="page">
-      <h1>Welcome</h1>
-      <p>This is my personal website.</p>
+      <h1>Welcome to Clever Acuna</h1>
+      <p>Adventures and stories from the road.</p>
       <div className="slideshow">
         <img
           src={images[currentIndex]}
