@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 function Home() {
   const { data: photos, isLoading, isError } = usePhotos();
 
-  if (isLoading) return <div>Loading your Ironman progress...</div>;
+  if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching photos.</div>;
 
   return (
@@ -14,9 +14,10 @@ function Home() {
         <Box
           sx={{
             height: 800,
-            width: "100%",
+            width: "80%",
             objectFit: "cover",
             objectPosition: "center",
+            paddingBottom: "2rem",
           }}
           component="img"
           key={photo.id}
