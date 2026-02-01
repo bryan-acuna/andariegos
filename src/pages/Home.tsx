@@ -16,6 +16,7 @@ function Home() {
             height: 800,
             width: "100%",
             objectFit: "cover",
+            objectPosition: "center",
           }}
           component="img"
           key={photo.id}
