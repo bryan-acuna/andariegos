@@ -7,7 +7,7 @@ export const uploadImage = async (file: File, bucket: string) => {
   const filePath = `${fileName}`;
 
   // 2. Upload to Storage
-  const { data: storageData, error: storageError } = await supabase.storage
+  const { error: storageError } = await supabase.storage
     .from(bucket)
     .upload(filePath, file);
 
