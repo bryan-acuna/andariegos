@@ -1,46 +1,30 @@
-import { useState, useEffect } from 'react'
-import './Home.css'
-
-const images = [
-  '/images/WhatsApp Image 2026-01-21 at 18.37.58.jpeg',
-  '/images/WhatsApp Image 2026-01-21 at 18.43.15.jpeg',
-  '/images/WhatsApp Image 2026-01-21 at 18.43.16.jpeg',
-  '/images/WhatsApp Image 2026-01-21 at 18.43.16 (1).jpeg',
-]
+import "./Home.css";
+import { usePhotos } from "../hooks/usePhotos";
+import { Box } from "@mui/material";
 
 function Home() {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const { data: photos, isLoading, isError } = usePhotos();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length)
-    }, 30000)
-
-    return () => clearInterval(interval)
-  }, [])
+  if (isLoading) return <div>Loading your Ironman progress...</div>;
+  if (isError) return <div>Error fetching photos.</div>;
 
   return (
-    <div className="page">
-      <h1>Welcome to Clever Acuna</h1>
-      <p>Adventures and stories from the road.</p>
-      <div className="slideshow">
-        <img
-          src={images[currentIndex]}
-          alt={`Slide ${currentIndex + 1}`}
-          className="slideshow-image"
+    <div className="grid">
+      {photos?.map((photo) => (
+        <Box
+          sx={{
+            height: 800,
+            width: "100%",
+            objectFit: "cover",
+          }}
+          component="img"
+          key={photo.id}
+          src={photo.image_url}
+          alt={photo.description}
         />
-        <div className="slideshow-dots">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              className={`dot ${index === currentIndex ? 'active' : ''}`}
-              onClick={() => setCurrentIndex(index)}
-            />
-          ))}
-        </div>
-      </div>
+      ))}
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;

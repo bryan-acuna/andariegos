@@ -37,3 +37,18 @@
 .dot.active {
   background: #646cff;
 }
+
+@media (max-width: 768px) {
+  .slideshow {
+    margin-top: 1rem;
+  }
+
+  .slideshow-image {
+    height: 300px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+}
