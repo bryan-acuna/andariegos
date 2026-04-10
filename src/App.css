@@ -27,6 +27,7 @@ main {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  text-decoration: none;
 }
 
 .mountain-icon {

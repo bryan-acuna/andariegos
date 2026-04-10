@@ -6,7 +6,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 type Photo = {
   id: string | number;
   image_url: string;
-  description: string;
+  description?: string;
 };
 
 function Home() {
