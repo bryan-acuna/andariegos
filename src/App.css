@@ -59,40 +59,59 @@ main {
   transition: background 0.2s;
 }
 
-.mobile-menu {
+.mobile-overlay {
+  display: none;
+}
+
+.mobile-drawer {
+  position: fixed;
+  inset: 0;
   background: #ffffff;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  padding: 0.5rem;
-  z-index: 200;
-  min-width: 180px;
-  animation: slideDown 0.15s ease;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+.drawer-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #213547;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem;
 }
 
 .mobile-nav {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
 
 .mobile-nav a {
-  padding: 0.75rem 1rem;
-  color: #555;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #213547;
   text-decoration: none;
-  font-size: 1rem;
-  border-radius: 6px;
-  transition: background 0.15s, color 0.15s;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
 }
 
 .mobile-nav a:hover,
 .mobile-nav a.active {
-  background: #f5f5ff;
   color: #646cff;
 }
 
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 .navbar {
@@ -168,6 +187,11 @@ main {
 
   .hamburger {
     display: flex;
+    order: 1;
+  }
+
+  .logo {
+    justify-content: center;
   }
 
   .social-links {

@@ -1,11 +1,41 @@
 import { NavLink, Outlet } from "react-router-dom";
-import * as Popover from "@radix-ui/react-popover";
+import * as Dialog from "@radix-ui/react-dialog";
 import logo from "../assets/logo.png";
 
 const Layout = () => {
   return (
     <div>
       <header className="header">
+        <div className="header-spacer" />
+
+        {/* Mobile hamburger */}
+        <Dialog.Root>
+          <Dialog.Trigger asChild>
+            <button className="hamburger" aria-label="Abrir menú">
+              <span />
+              <span />
+              <span />
+            </button>
+          </Dialog.Trigger>
+          <Dialog.Portal>
+            <Dialog.Overlay className="mobile-overlay" />
+            <Dialog.Content className="mobile-drawer">
+              <Dialog.Close className="drawer-close">✕</Dialog.Close>
+              <nav className="mobile-nav">
+                <Dialog.Close asChild>
+                  <NavLink to="/about">Quienes somos</NavLink>
+                </Dialog.Close>
+                <Dialog.Close asChild>
+                  <NavLink to="/" end>Montanas</NavLink>
+                </Dialog.Close>
+                <Dialog.Close asChild>
+                  <NavLink to="/contact">Contactar</NavLink>
+                </Dialog.Close>
+              </nav>
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
+
         <NavLink to="/" end className="logo">
           <img src={logo} alt="Andariegos" className="logo-img" />
         </NavLink>
@@ -17,34 +47,8 @@ const Layout = () => {
           <NavLink to="/contact">Contactar</NavLink>
         </nav>
 
-        {/* Mobile hamburger */}
-        <Popover.Root>
-          <Popover.Trigger asChild>
-            <button className="hamburger" aria-label="Abrir menú">
-              <span />
-              <span />
-              <span />
-            </button>
-          </Popover.Trigger>
-          <Popover.Portal>
-            <Popover.Content className="mobile-menu" sideOffset={12} align="end">
-              <nav className="mobile-nav">
-                <Popover.Close asChild>
-                  <NavLink to="/about">Quienes somos</NavLink>
-                </Popover.Close>
-                <Popover.Close asChild>
-                  <NavLink to="/" end>Montanas</NavLink>
-                </Popover.Close>
-                <Popover.Close asChild>
-                  <NavLink to="/contact">Contactar</NavLink>
-                </Popover.Close>
-              </nav>
-            </Popover.Content>
-          </Popover.Portal>
-        </Popover.Root>
-
         <div className="social-links">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <a href="https://instagram.com/andariegos_mundo" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
               <circle cx="12" cy="12" r="4"/>
