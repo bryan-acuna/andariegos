@@ -1,22 +1,47 @@
 import { NavLink, Outlet } from "react-router-dom";
+import * as Popover from "@radix-ui/react-popover";
+import logo from "../assets/logo.png";
 
 const Layout = () => {
   return (
     <div>
       <header className="header">
         <NavLink to="/" end className="logo">
-          <svg viewBox="0 0 100 100" className="mountain-icon">
-            <polygon points="50,15 85,85 15,85" fill="#646cff" />
-            <polygon points="50,35 70,85 30,85" fill="#535bf2" />
-          </svg>
-          <span className="brand-name">Andariegos</span>
+          <img src={logo} alt="Andariegos" className="logo-img" />
         </NavLink>
 
+        {/* Desktop nav */}
         <nav className="navbar">
           <NavLink to="/about">Quienes somos</NavLink>
           <NavLink to="/" end>Montanas</NavLink>
           <NavLink to="/contact">Contactar</NavLink>
         </nav>
+
+        {/* Mobile hamburger */}
+        <Popover.Root>
+          <Popover.Trigger asChild>
+            <button className="hamburger" aria-label="Abrir menú">
+              <span />
+              <span />
+              <span />
+            </button>
+          </Popover.Trigger>
+          <Popover.Portal>
+            <Popover.Content className="mobile-menu" sideOffset={12} align="end">
+              <nav className="mobile-nav">
+                <Popover.Close asChild>
+                  <NavLink to="/about">Quienes somos</NavLink>
+                </Popover.Close>
+                <Popover.Close asChild>
+                  <NavLink to="/" end>Montanas</NavLink>
+                </Popover.Close>
+                <Popover.Close asChild>
+                  <NavLink to="/contact">Contactar</NavLink>
+                </Popover.Close>
+              </nav>
+            </Popover.Content>
+          </Popover.Portal>
+        </Popover.Root>
 
         <div className="social-links">
           <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
