@@ -39,6 +39,10 @@ main {
   height: 40px;
 }
 
+.header-spacer {
+  display: none;
+}
+
 .hamburger {
   display: none;
   flex-direction: column;
@@ -187,11 +191,18 @@ main {
 
   .hamburger {
     display: flex;
-    order: 1;
+    order: 2;
+  }
+
+  .header-spacer {
+    display: block;
+    width: 40px;
+    order: 0;
   }
 
   .logo {
     justify-content: center;
+    order: 1;
   }
 
   .social-links {

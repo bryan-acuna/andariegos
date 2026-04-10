@@ -1,25 +1,33 @@
 .contact-page {
-  max-width: 560px;
-  margin: 2rem auto;
-  padding: 0 1.5rem;
+  min-height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
 }
 
 .contact-page h1 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 2.5rem;
   color: #213547;
+  text-align: center;
+  letter-spacing: 0.01em;
 }
 
 .contact-form {
+  width: 100%;
+  max-width: 680px;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.75rem;
 }
 
 .form-field {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .form-label-row {
@@ -29,53 +37,62 @@
 }
 
 .form-label {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #213547;
 }
 
 .form-message {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: #e53e3e;
 }
 
 .form-input,
 .form-textarea {
   width: 100%;
-  padding: 0.6rem 0.85rem;
+  padding: 0.85rem 1.1rem;
   border: 1.5px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 0.95rem;
+  border-radius: 8px;
+  font-size: 1rem;
   font-family: inherit;
   color: #213547;
   background: #fff;
   box-sizing: border-box;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
 }
 
 .form-input:focus,
 .form-textarea:focus {
   border-color: #646cff;
+  box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.12);
 }
 
 .form-textarea {
   resize: vertical;
+  min-height: 160px;
 }
 
 .form-submit {
-  align-self: flex-start;
+  align-self: stretch;
   background: #646cff;
   color: #fff;
   border: none;
-  padding: 0.65rem 1.75rem;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  font-weight: 600;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
   cursor: pointer;
   transition: background 0.2s;
+  letter-spacing: 0.02em;
 }
 
 .form-submit:hover {
   background: #535bf2;
+}
+
+@media (max-width: 768px) {
+  .contact-page h1 {
+    font-size: 2rem;
+  }
 }
