@@ -2,10 +2,13 @@ import "./Montanas.css";
 import { useState } from "react";
 import { usePhotos } from "../hooks/usePhotos";
 import * as Dialog from "@radix-ui/react-dialog";
+import Loader from "../components/Loader";
 
 type Photo = {
   id: string | number;
   image_url: string;
+  name?: string;
+  country?: string;
   description?: string;
 };
 
@@ -13,7 +16,7 @@ function Montanas() {
   const { data: photos, isLoading, isError } = usePhotos();
   const [selected, setSelected] = useState<Photo | null>(null);
 
-  if (isLoading) return <p className="grid-status">Cargando...</p>;
+  if (isLoading) return <Loader />;
   if (isError) return <p className="grid-status">Error al cargar fotos.</p>;
 
   return (
@@ -35,13 +38,27 @@ function Montanas() {
           <Dialog.Overlay className="dialog-overlay" />
           <Dialog.Content className="dialog-content">
             <Dialog.Title className="dialog-title">
-              {selected?.description}
+              {selected?.name || selected?.description || "Foto"}
             </Dialog.Title>
             <img
               src={selected?.image_url}
-              alt={selected?.description}
+              alt={selected?.name}
               className="dialog-image"
             />
+            <div className="dialog-meta">
+              {selected?.country && (
+                <span className="dialog-meta-item">
+                  <span className="dialog-meta-label">País</span>
+                  {selected.country}
+                </span>
+              )}
+              {selected?.description && (
+                <span className="dialog-meta-item">
+                  <span className="dialog-meta-label">Descripción</span>
+                  {selected.description}
+                </span>
+              )}
+            </div>
             <Dialog.Close className="dialog-close">✕</Dialog.Close>
           </Dialog.Content>
         </Dialog.Portal>

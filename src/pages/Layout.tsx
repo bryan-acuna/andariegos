@@ -13,6 +13,7 @@ const Layout = () => {
         {/* Desktop nav */}
         <nav className="navbar">
           <NavLink to="/" end>Mi historia</NavLink>
+          <NavLink to="/about">Sobre mí</NavLink>
           <NavLink to="/montanas">Montañas</NavLink>
           <NavLink to="/contact">Contactar</NavLink>
         </nav>
@@ -33,6 +34,9 @@ const Layout = () => {
               <nav className="mobile-nav">
                 <Dialog.Close asChild>
                   <NavLink to="/" end>Mi historia</NavLink>
+                </Dialog.Close>
+                <Dialog.Close asChild>
+                  <NavLink to="/about">Sobre mí</NavLink>
                 </Dialog.Close>
                 <Dialog.Close asChild>
                   <NavLink to="/montanas">Montañas</NavLink>

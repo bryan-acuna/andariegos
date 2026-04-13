@@ -7,6 +7,8 @@ import Layout from "./pages/Layout";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ImageUploader from "./pages/ImageUploader";
 import NewAdventure from "./pages/NewAdventure";
+import About from "./pages/About";
+import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +22,8 @@ const router = createBrowserRouter([
       { path: "contact", element: <Contact /> },
       { path: "login", element: <ImageUploader /> },
       { path: "newadventure", element: <NewAdventure /> },
+      { path: "about", element: <About /> },
+      { path: "admin", element: <Admin /> },
     ],
   },
 ]);
