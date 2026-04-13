@@ -5,10 +5,10 @@ export function useUpdatePhoto() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, name, country, description }: { id: string; name?: string; country?: string; description?: string }) => {
+    mutationFn: async ({ id, Name, country, description }: { id: number; Name?: string; country?: string; description?: string }) => {
       const { error } = await supabase
         .from("Images")
-        .update({ name, country, description })
+        .update({ Name, country, description })
         .eq("id", id);
       if (error) throw new Error(error.message);
     },

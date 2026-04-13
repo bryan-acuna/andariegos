@@ -5,9 +5,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 import Loader from "../components/Loader";
 
 type Photo = {
-  id: string | number;
+  id: number;
   image_url: string;
-  name?: string;
+  Name?: string;
   country?: string;
   description?: string;
 };
@@ -38,11 +38,11 @@ function Montanas() {
           <Dialog.Overlay className="dialog-overlay" />
           <Dialog.Content className="dialog-content">
             <Dialog.Title className="dialog-title">
-              {selected?.name || selected?.description || "Foto"}
+              {selected?.Name || selected?.description || "Foto"}
             </Dialog.Title>
             <img
               src={selected?.image_url}
-              alt={selected?.name}
+              alt={selected?.Name}
               className="dialog-image"
             />
             <div className="dialog-meta">

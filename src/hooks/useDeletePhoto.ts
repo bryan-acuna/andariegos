@@ -5,7 +5,7 @@ export function useDeletePhoto() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, imageUrl }: { id: string; imageUrl: string }) => {
+    mutationFn: async ({ id, imageUrl }: { id: number; imageUrl: string }) => {
       // Extract storage path from public URL
       const path = imageUrl.split("/andariegos/")[1];
       if (path) {

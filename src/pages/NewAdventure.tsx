@@ -1,9 +1,16 @@
 import { useState } from "react";
 import * as Form from "@radix-ui/react-form";
+import * as Progress from "@radix-ui/react-progress";
+import { useNavigate } from "react-router-dom";
+import { uploadImage } from "../lib/uploadImage";
+import { supabase } from "../lib/supabase";
 import "./NewAdventure.css";
 
 function NewAdventure() {
+  const navigate = useNavigate();
   const [photos, setPhotos] = useState<{ file: File; preview: string }[]>([]);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleFiles = (files: FileList | null) => {
     if (!files) return;
@@ -21,10 +28,34 @@ function NewAdventure() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.currentTarget));
-    console.log({ ...data, photos: photos.map((p) => p.file) });
+    if (photos.length === 0) {
+      setError("Por favor sube al menos una foto.");
+      return;
+    }
+    setError(null);
+    setSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    const Name = formData.get("nombre") as string;
+    const country = formData.get("pais") as string;
+    const description = formData.get("descripcion") as string;
+
+    try {
+      for (const photo of photos) {
+        const image_url = await uploadImage(photo.file, "andariegos");
+        const { error: dbError } = await supabase
+          .from("Images")
+          .insert([{ Name, country, description, image_url }]);
+        if (dbError) throw new Error(dbError.message);
+      }
+      navigate("/admin");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Error al guardar.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -32,7 +63,6 @@ function NewAdventure() {
       <h1>Nueva Aventura</h1>
       <Form.Root className="adventure-form" onSubmit={handleSubmit}>
 
-        {/* Name */}
         <Form.Field className="form-field" name="nombre">
           <div className="form-label-row">
             <Form.Label className="form-label">Nombre</Form.Label>
@@ -45,7 +75,6 @@ function NewAdventure() {
           </Form.Control>
         </Form.Field>
 
-        {/* Country */}
         <Form.Field className="form-field" name="pais">
           <div className="form-label-row">
             <Form.Label className="form-label">País</Form.Label>
@@ -58,47 +87,15 @@ function NewAdventure() {
           </Form.Control>
         </Form.Field>
 
-        {/* Altitude + Days side by side */}
-        <div className="form-row">
-          <Form.Field className="form-field" name="altitud">
-            <div className="form-label-row">
-              <Form.Label className="form-label">Altitud (m)</Form.Label>
-              <Form.Message className="form-message" match="valueMissing">
-                Requerido
-              </Form.Message>
-            </div>
-            <Form.Control asChild>
-              <input className="form-input" type="number" placeholder="Ej. 4200" min={0} required />
-            </Form.Control>
-          </Form.Field>
-
-          <Form.Field className="form-field" name="dias">
-            <div className="form-label-row">
-              <Form.Label className="form-label">Días</Form.Label>
-              <Form.Message className="form-message" match="valueMissing">
-                Requerido
-              </Form.Message>
-            </div>
-            <Form.Control asChild>
-              <input className="form-input" type="number" placeholder="Ej. 5" min={1} required />
-            </Form.Control>
-          </Form.Field>
-        </div>
-
-        {/* Cost */}
-        <Form.Field className="form-field" name="costo">
+        <Form.Field className="form-field" name="descripcion">
           <div className="form-label-row">
-            <Form.Label className="form-label">Costo (USD)</Form.Label>
-            <Form.Message className="form-message" match="valueMissing">
-              Por favor ingresa el costo
-            </Form.Message>
+            <Form.Label className="form-label">Descripción</Form.Label>
           </div>
           <Form.Control asChild>
-            <input className="form-input" type="number" placeholder="Ej. 500" min={0} required />
+            <textarea className="form-input form-textarea" placeholder="Descripción de la aventura..." rows={3} />
           </Form.Control>
         </Form.Field>
 
-        {/* Photos */}
         <div className="form-field">
           <span className="form-label">Fotos</span>
           <label className="photo-upload-area">
@@ -129,7 +126,17 @@ function NewAdventure() {
           )}
         </div>
 
-        <Form.Submit className="form-submit">Guardar Aventura</Form.Submit>
+        {error && <p style={{ color: "#e53e3e", fontSize: "0.9rem" }}>{error}</p>}
+
+        {submitting && (
+          <Progress.Root style={{ height: 4, borderRadius: 99, background: "#e5e5e5", overflow: "hidden" }} value={null}>
+            <Progress.Indicator style={{ height: "100%", width: "40%", background: "#646cff", borderRadius: 99, animation: "slide 1.2s ease-in-out infinite" }} />
+          </Progress.Root>
+        )}
+
+        <Form.Submit className="form-submit" disabled={submitting}>
+          {submitting ? "Guardando..." : "Guardar Aventura"}
+        </Form.Submit>
       </Form.Root>
     </div>
   );

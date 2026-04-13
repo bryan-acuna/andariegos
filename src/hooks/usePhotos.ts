@@ -4,10 +4,10 @@ import { supabase } from "../lib/supabase";
 
 // Define the shape of your data for TypeScript
 export interface Photo {
-  id: string;
+  id: number;
   created_at: string;
   image_url: string;
-  name?: string;
+  Name?: string;
   country?: string;
   description?: string;
 }

@@ -141,6 +141,11 @@
   gap: 1rem;
 }
 
+.form-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
 .form-submit {
   align-self: stretch;
   background: #646cff;
