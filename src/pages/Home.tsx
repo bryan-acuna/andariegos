@@ -1,52 +1,16 @@
 import "./Home.css";
-import { useState } from "react";
-import { usePhotos } from "../hooks/usePhotos";
-import * as Dialog from "@radix-ui/react-dialog";
-
-type Photo = {
-  id: string | number;
-  image_url: string;
-  description?: string;
-};
+import hero from "../assets/hero.jpg";
 
 function Home() {
-  const { data: photos, isLoading, isError } = usePhotos();
-  const [selected, setSelected] = useState<Photo | null>(null);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching photos.</div>;
-
   return (
-    <>
-      <div className="grid">
-        {photos?.map((photo) => (
-          <img
-            key={photo.id}
-            src={photo.image_url}
-            alt={photo.description}
-            className="grid-photo"
-            onClick={() => setSelected(photo)}
-          />
-        ))}
+    <div className="hero">
+      <img src={hero} alt="Andariegos hero" className="hero-img" />
+      <div className="hero-overlay" />
+      <div className="hero-text">
+        <h1>No conquisto cumbres</h1>
+        <h2>conquisto mis miedos</h2>
       </div>
-
-      <Dialog.Root open={!!selected} onOpenChange={(open) => !open && setSelected(null)}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="dialog-overlay" />
-          <Dialog.Content className="dialog-content">
-            <Dialog.Title className="dialog-title">
-              {selected?.description}
-            </Dialog.Title>
-            <img
-              src={selected?.image_url}
-              alt={selected?.description}
-              className="dialog-image"
-            />
-            <Dialog.Close className="dialog-close">✕</Dialog.Close>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-    </>
+    </div>
   );
 }
 

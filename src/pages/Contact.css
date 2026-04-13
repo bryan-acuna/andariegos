@@ -1,27 +1,30 @@
 .contact-page {
-  min-height: calc(100vh - 120px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 1.5rem;
+  display: grid;
+  grid-template-columns: 5fr auto 3fr;
+  gap: 0;
+  min-height: calc(100vh - 160px);
+  width: calc(100% + 4rem);
+  margin-left: -2rem;
+  margin-right: -2rem;
+  padding: 3rem 5rem;
+  align-items: start;
+  text-align: left;
+  box-sizing: border-box;
 }
 
-.contact-page h1 {
-  font-size: 2.5rem;
+/* ── Left ────────────────────────────────────────── */
+.contact-left h1,
+.contact-right h1 {
+  font-size: 2rem;
   font-weight: 800;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   color: #213547;
-  text-align: center;
-  letter-spacing: 0.01em;
 }
 
 .contact-form {
-  width: 100%;
-  max-width: 680px;
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 1.5rem;
 }
 
 .form-field {
@@ -91,8 +94,68 @@
   background: #535bf2;
 }
 
+/* ── Divider ─────────────────────────────────────── */
+.contact-divider {
+  width: 1px;
+  background: #e5e5e5;
+  align-self: stretch;
+  margin: 0 10rem;
+}
+
+/* ── Right ───────────────────────────────────────── */
+.social-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.social-item {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  text-decoration: none;
+  color: #213547;
+  padding: 1rem 1.25rem;
+  border: 1.5px solid #e5e5e5;
+  border-radius: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.social-item:hover {
+  border-color: #646cff;
+  box-shadow: 0 2px 12px rgba(100, 108, 255, 0.1);
+}
+
+.social-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.social-handle {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0.2rem 0 0;
+}
+
+/* ── Mobile ──────────────────────────────────────── */
 @media (max-width: 768px) {
-  .contact-page h1 {
-    font-size: 2rem;
+  .contact-page {
+    grid-template-columns: 1fr;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 2rem 1.5rem;
+  }
+
+  .contact-divider {
+    width: 100%;
+    height: 1px;
+    margin: 2rem 0;
+  }
+
+  .contact-left h1,
+  .contact-right h1 {
+    font-size: 1.6rem;
   }
 }
