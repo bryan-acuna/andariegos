@@ -18,17 +18,136 @@
   margin-bottom: 2.5rem;
 }
 
+/* Layout: map + panel side by side */
+.mapa-layout {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.mapa-layout--split .mapa-container {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
 .mapa-container {
+  position: relative;
   background: #eaf3fb;
   border-radius: 16px;
   overflow: hidden;
   border: 1.5px solid #d1e8f5;
+  flex: 1;
 }
 
 .mapa-container svg {
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* Photo panel */
+.mapa-panel {
+  width: 300px;
+  flex-shrink: 0;
+  background: #fff;
+  border: 1.5px solid #e5e5e5;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: slidePanel 0.2s ease;
+  max-height: 520px;
+}
+
+@keyframes slidePanel {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.mapa-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem 1.1rem;
+  border-bottom: 2px solid;
+}
+
+.mapa-panel-header h2 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 0 0 0.15rem;
+}
+
+.mapa-panel-count {
+  font-size: 0.82rem;
+  color: #888;
+  margin: 0;
+}
+
+.mapa-panel-close {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.mapa-panel-close:hover { color: #555; }
+
+.mapa-panel-empty {
+  padding: 2rem 1.25rem;
+  color: #888;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.mapa-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.mapa-panel-thumb {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 1;
+}
+
+.mapa-panel-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.mapa-panel-thumb:hover img {
+  transform: scale(1.05);
+  opacity: 0.85;
+}
+
+.mapa-thumb-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.65));
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.5rem 0.4rem 0.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .country-default {
@@ -149,8 +268,109 @@
   z-index: 100;
 }
 
+/* Lightbox — reuse Montanas dialog styles */
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 200;
+  animation: fadeIn 0.15s ease;
+}
+
+.dialog-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1a1a1a;
+  border-radius: 10px;
+  padding: 1.5rem;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  z-index: 201;
+  animation: scaleIn 0.15s ease;
+}
+
+.dialog-title {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+}
+
+.dialog-image {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.dialog-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  text-align: left;
+}
+
+.dialog-meta-item {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.85);
+}
+
+.dialog-meta-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 0.1rem;
+}
+
+.dialog-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.dialog-close:hover { background: rgba(255,255,255,0.25); }
+
+@keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn {
+  from { opacity: 0; transform: translate(-50%,-48%) scale(0.97); }
+  to   { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+}
+
 @media (max-width: 768px) {
   .mapa-page {
     padding: 2rem 1.25rem;
+  }
+
+  .mapa-layout--split {
+    flex-direction: column;
+  }
+
+  .mapa-panel {
+    width: 100%;
+    max-height: 400px;
   }
 }
