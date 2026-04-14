@@ -110,13 +110,13 @@ export default function Mapa() {
             <ZoomableGroup
               center={position.center}
               zoom={position.zoom}
-              onMoveEnd={({ coordinates, zoom }) =>
-                setPosition({ center: coordinates as [number, number], zoom })
+              onMoveEnd={({ coordinates, zoom }: { coordinates: [number, number]; zoom: number }) =>
+                setPosition({ center: coordinates, zoom })
               }
             >
               <Geographies geography={GEO_URL}>
-                {({ geographies }) =>
-                  geographies.map((geo) => {
+                {({ geographies }: { geographies: import("react-simple-maps").Geography[] }) =>
+                  geographies.map((geo: import("react-simple-maps").Geography) => {
                     const isoNum   = Number(geo.id);
                     const isVisited = highlightedIso.has(isoNum);
                     const color     = ISO_COLOR[isoNum];
@@ -148,8 +148,8 @@ export default function Mapa() {
                     key={pin.name}
                     coordinates={pin.coords}
                     onClick={() => handleSelect(pin)}
-                    onMouseEnter={(e) => setTooltip({ x: (e as MouseEvent).clientX, y: (e as MouseEvent).clientY, name: pin.name })}
-                    onMouseMove={(e)  => setTooltip({ x: (e as MouseEvent).clientX, y: (e as MouseEvent).clientY, name: pin.name })}
+                    onMouseEnter={(e) => setTooltip({ x: e.clientX, y: e.clientY, name: pin.name })}
+                    onMouseMove={(e)  => setTooltip({ x: e.clientX, y: e.clientY, name: pin.name })}
                     onMouseLeave={() => setTooltip(null)}
                   >
                     <g
