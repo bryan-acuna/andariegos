@@ -5,10 +5,12 @@ import Montanas from "./pages/Montanas";
 import "./App.css";
 import Layout from "./pages/Layout";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastProvider } from "./components/Toast";
 import ImageUploader from "./pages/ImageUploader";
 import NewAdventure from "./pages/NewAdventure";
 import About from "./pages/About";
 import Admin from "./pages/Admin";
+import Mapa from "./pages/Mapa";
 
 const queryClient = new QueryClient();
 
@@ -24,17 +26,18 @@ const router = createBrowserRouter([
       { path: "newadventure", element: <NewAdventure /> },
       { path: "about", element: <About /> },
       { path: "admin", element: <Admin /> },
+      { path: "mapa", element: <Mapa /> },
     ],
   },
 ]);
 
 function App() {
   return (
-    <>
-<QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <ToastProvider>
         <RouterProvider router={router} />
-      </QueryClientProvider>
-    </>
+      </ToastProvider>
+    </QueryClientProvider>
   );
 }
 

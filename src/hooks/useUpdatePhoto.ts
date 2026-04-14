@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../lib/supabase";
 
-export function useUpdatePhoto() {
+type UpdateCallbacks = { onSuccess?: () => void; onError?: () => void };
+
+export function useUpdatePhoto(callbacks?: UpdateCallbacks) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -12,6 +14,10 @@ export function useUpdatePhoto() {
         .eq("id", id);
       if (error) throw new Error(error.message);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["training_photos"] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["training_photos"] });
+      callbacks?.onSuccess?.();
+    },
+    onError: () => callbacks?.onError?.(),
   });
 }

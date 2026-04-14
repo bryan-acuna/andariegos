@@ -1,13 +1,18 @@
 import { useState } from "react";
-import * as Form from "@radix-ui/react-form";
 import * as Progress from "@radix-ui/react-progress";
 import { useNavigate } from "react-router-dom";
 import { uploadImage } from "../lib/uploadImage";
 import { supabase } from "../lib/supabase";
+import { useToast } from "../components/Toast";
 import "./NewAdventure.css";
 
 function NewAdventure() {
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const [name, setName] = useState("");
+  const [country, setCountry] = useState("");
+  const [description, setDescription] = useState("");
   const [photos, setPhotos] = useState<{ file: File; preview: string }[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,30 +35,27 @@ function NewAdventure() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (photos.length === 0) {
-      setError("Por favor sube al menos una foto.");
-      return;
-    }
     setError(null);
+
+    if (!name.trim()) { setError("Por favor ingresa un nombre."); return; }
+    if (!country.trim()) { setError("Por favor ingresa el país."); return; }
+    if (photos.length === 0) { setError("Por favor sube al menos una foto."); return; }
+
     setSubmitting(true);
-
-    const formData = new FormData(e.currentTarget);
-    const Name = formData.get("nombre") as string;
-    const country = formData.get("pais") as string;
-    const description = formData.get("descripcion") as string;
-
     try {
       for (const photo of photos) {
         const image_url = await uploadImage(photo.file, "andariegos");
         const { error: dbError } = await supabase
           .from("Images")
-          .insert([{ Name, country, description, image_url }]);
+          .insert([{ Name: name.trim(), country: country.trim(), description: description.trim(), image_url }]);
         if (dbError) throw new Error(dbError.message);
       }
+      toast("success", "Aventura guardada", "La aventura fue creada correctamente.");
       navigate("/admin");
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Error al guardar.");
-    } finally {
+      const msg = err instanceof Error ? err.message : "Error al guardar.";
+      setError(msg);
+      toast("error", "Error al guardar", msg);
       setSubmitting(false);
     }
   };
@@ -61,40 +63,43 @@ function NewAdventure() {
   return (
     <div className="new-adventure-page">
       <h1>Nueva Aventura</h1>
-      <Form.Root className="adventure-form" onSubmit={handleSubmit}>
+      <form className="adventure-form" onSubmit={handleSubmit}>
 
-        <Form.Field className="form-field" name="nombre">
-          <div className="form-label-row">
-            <Form.Label className="form-label">Nombre</Form.Label>
-            <Form.Message className="form-message" match="valueMissing">
-              Por favor ingresa un nombre
-            </Form.Message>
-          </div>
-          <Form.Control asChild>
-            <input className="form-input" type="text" placeholder="Nombre de la aventura" required />
-          </Form.Control>
-        </Form.Field>
+        <div className="form-field">
+          <label className="form-label" htmlFor="nombre">Nombre</label>
+          <input
+            id="nombre"
+            className="form-input"
+            type="text"
+            placeholder="Nombre de la aventura"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
 
-        <Form.Field className="form-field" name="pais">
-          <div className="form-label-row">
-            <Form.Label className="form-label">País</Form.Label>
-            <Form.Message className="form-message" match="valueMissing">
-              Por favor ingresa el país
-            </Form.Message>
-          </div>
-          <Form.Control asChild>
-            <input className="form-input" type="text" placeholder="Ej. Perú" required />
-          </Form.Control>
-        </Form.Field>
+        <div className="form-field">
+          <label className="form-label" htmlFor="pais">País</label>
+          <input
+            id="pais"
+            className="form-input"
+            type="text"
+            placeholder="Ej. Perú"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+          />
+        </div>
 
-        <Form.Field className="form-field" name="descripcion">
-          <div className="form-label-row">
-            <Form.Label className="form-label">Descripción</Form.Label>
-          </div>
-          <Form.Control asChild>
-            <textarea className="form-input form-textarea" placeholder="Descripción de la aventura..." rows={3} />
-          </Form.Control>
-        </Form.Field>
+        <div className="form-field">
+          <label className="form-label" htmlFor="descripcion">Descripción</label>
+          <textarea
+            id="descripcion"
+            className="form-input form-textarea"
+            placeholder="Descripción de la aventura..."
+            rows={3}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
 
         <div className="form-field">
           <span className="form-label">Fotos</span>
@@ -126,7 +131,7 @@ function NewAdventure() {
           )}
         </div>
 
-        {error && <p style={{ color: "#e53e3e", fontSize: "0.9rem" }}>{error}</p>}
+        {error && <p style={{ color: "#e53e3e", fontSize: "0.9rem", margin: 0 }}>{error}</p>}
 
         {submitting && (
           <Progress.Root style={{ height: 4, borderRadius: 99, background: "#e5e5e5", overflow: "hidden" }} value={null}>
@@ -134,10 +139,10 @@ function NewAdventure() {
           </Progress.Root>
         )}
 
-        <Form.Submit className="form-submit" disabled={submitting}>
+        <button className="form-submit" type="submit" disabled={submitting}>
           {submitting ? "Guardando..." : "Guardar Aventura"}
-        </Form.Submit>
-      </Form.Root>
+        </button>
+      </form>
     </div>
   );
 }

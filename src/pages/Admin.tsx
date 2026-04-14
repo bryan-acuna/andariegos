@@ -5,6 +5,7 @@ import { usePhotos } from "../hooks/usePhotos";
 import { useDeletePhoto } from "../hooks/useDeletePhoto";
 import { useUpdatePhoto } from "../hooks/useUpdatePhoto";
 import Loader from "../components/Loader";
+import { useToast } from "../components/Toast";
 import "./Admin.css";
 
 type Photo = {
@@ -21,8 +22,15 @@ function AdminCard({ photo }: { photo: Photo }) {
   const [country, setCountry] = useState(photo.country ?? "");
   const [desc, setDesc] = useState(photo.description ?? "");
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const { mutate: deletePhoto, isPending: deleting } = useDeletePhoto();
-  const { mutate: updatePhoto, isPending: saving } = useUpdatePhoto();
+  const { toast } = useToast();
+  const { mutate: deletePhoto, isPending: deleting } = useDeletePhoto({
+    onSuccess: () => toast("success", "Foto eliminada"),
+    onError: () => toast("error", "Error al eliminar", "Inténtalo de nuevo."),
+  });
+  const { mutate: updatePhoto, isPending: saving } = useUpdatePhoto({
+    onSuccess: () => toast("success", "Cambios guardados"),
+    onError: () => toast("error", "Error al guardar", "Inténtalo de nuevo."),
+  });
 
   const isDirty =
     name !== (photo.Name ?? "") ||

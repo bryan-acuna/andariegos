@@ -15,6 +15,7 @@ const Layout = () => {
           <NavLink to="/" end>Mi historia</NavLink>
           <NavLink to="/about">Sobre mí</NavLink>
           <NavLink to="/montanas">Montañas</NavLink>
+          <NavLink to="/mapa">Mapa</NavLink>
           <NavLink to="/contact">Contactar</NavLink>
         </nav>
 
@@ -40,6 +41,9 @@ const Layout = () => {
                 </Dialog.Close>
                 <Dialog.Close asChild>
                   <NavLink to="/montanas">Montañas</NavLink>
+                </Dialog.Close>
+                <Dialog.Close asChild>
+                  <NavLink to="/mapa">Mapa</NavLink>
                 </Dialog.Close>
                 <Dialog.Close asChild>
                   <NavLink to="/contact">Contactar</NavLink>
