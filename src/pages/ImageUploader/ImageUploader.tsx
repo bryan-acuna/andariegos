@@ -7,8 +7,8 @@ import {
   Paper,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { uploadImage } from "../lib/uploadImage";
-import { supabase } from "../lib/supabase";
+import { uploadImage } from "../../lib/uploadImage";
+import { supabase } from "../../lib/supabase";
 
 export default function ImageUploader() {
   const [uploading, setUploading] = useState(false);

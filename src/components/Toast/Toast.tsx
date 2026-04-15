@@ -25,12 +25,16 @@ export function useToast() {
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
-  const toast = useCallback((type: ToastType, title: string, description?: string) => {
-    const id = Date.now();
-    setToasts((prev) => [...prev, { id, type, title, description }]);
-  }, []);
+  const toast = useCallback(
+    (type: ToastType, title: string, description?: string) => {
+      const id = Date.now();
+      setToasts((prev) => [...prev, { id, type, title, description }]);
+    },
+    [],
+  );
 
-  const remove = (id: number) => setToasts((prev) => prev.filter((t) => t.id !== id));
+  const remove = (id: number) =>
+    setToasts((prev) => prev.filter((t) => t.id !== id));
 
   return (
     <ToastContext.Provider value={{ toast }}>
@@ -42,10 +46,14 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             key={t.id}
             className="toast-root"
             data-type={t.type}
-            onOpenChange={(open) => { if (!open) remove(t.id); }}
+            onOpenChange={(open) => {
+              if (!open) remove(t.id);
+            }}
           >
             <div className="toast-body">
-              <RadixToast.Title className="toast-title">{t.title}</RadixToast.Title>
+              <RadixToast.Title className="toast-title">
+                {t.title}
+              </RadixToast.Title>
               {t.description && (
                 <RadixToast.Description className="toast-description">
                   {t.description}

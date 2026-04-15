@@ -1,8 +1,8 @@
 import "./Montanas.css";
 import { useState } from "react";
-import { usePhotos } from "../hooks/usePhotos";
+import { usePhotos } from "../../hooks/usePhotos";
 import * as Dialog from "@radix-ui/react-dialog";
-import Loader from "../components/Loader";
+import { Loader } from "../../components";
 
 type Photo = {
   id: number;

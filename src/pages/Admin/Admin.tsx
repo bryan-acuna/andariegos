@@ -1,12 +1,12 @@
 import { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Link } from "react-router-dom";
-import { usePhotos } from "../hooks/usePhotos";
-import { useDeletePhoto } from "../hooks/useDeletePhoto";
-import { useUpdatePhoto } from "../hooks/useUpdatePhoto";
-import Loader from "../components/Loader";
-import { useToast } from "../components/Toast";
+
 import "./Admin.css";
+import { useToast, Loader } from "../../components";
+import { useDeletePhoto } from "../../hooks/useDeletePhoto";
+import { useUpdatePhoto } from "../../hooks/useUpdatePhoto";
+import { usePhotos } from "../../hooks/usePhotos";
 
 type Photo = {
   id: number;
@@ -40,7 +40,11 @@ function AdminCard({ photo }: { photo: Photo }) {
   return (
     <>
       <div className="admin-card">
-        <img src={photo.image_url} alt={photo.Name ?? photo.description} className="admin-card-img" />
+        <img
+          src={photo.image_url}
+          alt={photo.Name ?? photo.description}
+          className="admin-card-img"
+        />
         <div className="admin-card-body">
           <input
             className="admin-desc-input"
@@ -65,7 +69,14 @@ function AdminCard({ photo }: { photo: Photo }) {
             <button
               className="btn-save"
               disabled={saving || !isDirty}
-              onClick={() => updatePhoto({ id: photo.id, Name: name, country, description: desc })}
+              onClick={() =>
+                updatePhoto({
+                  id: photo.id,
+                  Name: name,
+                  country,
+                  description: desc,
+                })
+              }
             >
               {saving ? "Guardando..." : "Guardar"}
             </button>
@@ -116,7 +127,9 @@ function Admin() {
     <div className="admin-page">
       <div className="admin-header">
         <h1>Gestionar fotos</h1>
-        <Link to="/newadventure" className="btn-add">+ Agregar</Link>
+        <Link to="/newadventure" className="btn-add">
+          + Agregar
+        </Link>
       </div>
 
       {isLoading && <Loader />}

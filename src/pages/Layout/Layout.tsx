@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import * as Dialog from "@radix-ui/react-dialog";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 
 const Layout = () => {
   return (

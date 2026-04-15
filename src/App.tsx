@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Montanas from "./pages/Montanas";
@@ -11,8 +15,18 @@ import NewAdventure from "./pages/NewAdventure";
 import About from "./pages/About";
 import Admin from "./pages/Admin";
 import Mapa from "./pages/Mapa";
+import { AuthProvider } from "./context/Authcontext";
+import { useAuth } from "./hooks/useAuth";
+import type { JSX } from "react";
+import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
+
+const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+  const { session, loading } = useAuth();
+  if (loading) return null;
+  return session ? children : <Navigate to="/register" replace />;
+};
 
 const router = createBrowserRouter([
   {
@@ -22,22 +36,39 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "montanas", element: <Montanas /> },
       { path: "contact", element: <Contact /> },
-      { path: "login", element: <ImageUploader /> },
+      {
+        path: "login",
+        element: (
+          <ProtectedRoute>
+            <ImageUploader />
+          </ProtectedRoute>
+        ),
+      },
       { path: "newadventure", element: <NewAdventure /> },
       { path: "about", element: <About /> },
-      { path: "admin", element: <Admin /> },
+      {
+        path: "admin",
+        element: (
+          <ProtectedRoute>
+            <Admin />
+          </ProtectedRoute>
+        ),
+      },
       { path: "mapa", element: <Mapa /> },
+      { path: "register", element: <Login /> },
     ],
   },
 ]);
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ToastProvider>
-        <RouterProvider router={router} />
-      </ToastProvider>
-    </QueryClientProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <ToastProvider>
+          <RouterProvider router={router} />
+        </ToastProvider>
+      </QueryClientProvider>
+    </AuthProvider>
   );
 }
 
