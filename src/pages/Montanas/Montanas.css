@@ -28,6 +28,10 @@
   transform: scale(1.01);
 }
 
+.grid-sentinel {
+  height: 1px;
+}
+
 /* Dialog */
 .dialog-overlay {
   position: fixed;
@@ -134,5 +138,15 @@
 
   .grid-photo {
     height: 220px;
+  }
+
+  .dialog-content {
+    width: 80vw;
+    max-width: 80vw;
+    padding: 1.25rem;
+  }
+
+  .dialog-image {
+    max-height: 55vh;
   }
 }

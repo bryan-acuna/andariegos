@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { uploadImage } from "../../lib/uploadImage";
 import { supabase } from "../../lib/supabase";
 import { useToast } from "../../components";
+import { COUNTRIES } from "../../lib/countries";
 import "./NewAdventure.css";
 
 function NewAdventure() {
@@ -102,14 +103,17 @@ function NewAdventure() {
           <label className="form-label" htmlFor="pais">
             País
           </label>
-          <input
+          <select
             id="pais"
-            className="form-input"
-            type="text"
-            placeholder="Ej. Perú"
+            className="form-input form-select"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
-          />
+          >
+            <option value="">Seleccionar país...</option>
+            {COUNTRIES.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
         </div>
 
         <div className="form-field">

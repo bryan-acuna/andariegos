@@ -141,6 +141,53 @@
   flex: 1;
 }
 
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.admin-field-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.admin-card-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.admin-meta-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #213547;
+  margin: 0;
+}
+
+.admin-meta-country {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 0;
+}
+
+.admin-meta-desc {
+  font-size: 0.82rem;
+  color: #888;
+  margin: 0.25rem 0 0;
+  line-height: 1.4;
+}
+
+.admin-meta-empty {
+  color: #bbb;
+  font-style: italic;
+  font-weight: 400;
+}
+
 .admin-desc-input {
   width: 100%;
   padding: 0.55rem 0.75rem;
@@ -159,6 +206,15 @@
 .admin-desc-input:focus {
   border-color: #646cff;
   background: #fff;
+}
+
+.admin-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2rem;
+  cursor: pointer;
 }
 
 .admin-card-actions {
@@ -185,6 +241,46 @@
 
 .btn-save:disabled {
   opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-edit {
+  flex: 1;
+  padding: 0.55rem 0;
+  background: #f3f4f6;
+  color: #213547;
+  border: 1.5px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-edit:hover {
+  background: #e9eaff;
+  border-color: #646cff;
+  color: #646cff;
+}
+
+.btn-cancel-edit {
+  padding: 0.55rem 0.85rem;
+  background: #fff;
+  color: #555;
+  border: 1.5px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-cancel-edit:hover {
+  background: #f3f4f6;
+}
+
+.btn-cancel-edit:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
 }
 

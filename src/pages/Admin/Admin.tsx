@@ -7,6 +7,7 @@ import { useToast, Loader } from "../../components";
 import { useDeletePhoto } from "../../hooks/useDeletePhoto";
 import { useUpdatePhoto } from "../../hooks/useUpdatePhoto";
 import { usePhotos } from "../../hooks/usePhotos";
+import { COUNTRIES } from "../../lib/countries";
 
 type Photo = {
   id: number;
@@ -18,6 +19,7 @@ type Photo = {
 };
 
 function AdminCard({ photo }: { photo: Photo }) {
+  const [editing, setEditing] = useState(false);
   const [name, setName] = useState(photo.Name ?? "");
   const [country, setCountry] = useState(photo.country ?? "");
   const [desc, setDesc] = useState(photo.description ?? "");
@@ -28,14 +30,19 @@ function AdminCard({ photo }: { photo: Photo }) {
     onError: () => toast("error", "Error al eliminar", "Inténtalo de nuevo."),
   });
   const { mutate: updatePhoto, isPending: saving } = useUpdatePhoto({
-    onSuccess: () => toast("success", "Cambios guardados"),
+    onSuccess: () => {
+      toast("success", "Cambios guardados");
+      setEditing(false);
+    },
     onError: () => toast("error", "Error al guardar", "Inténtalo de nuevo."),
   });
 
-  const isDirty =
-    name !== (photo.Name ?? "") ||
-    country !== (photo.country ?? "") ||
-    desc !== (photo.description ?? "");
+  const handleCancel = () => {
+    setName(photo.Name ?? "");
+    setCountry(photo.country ?? "");
+    setDesc(photo.description ?? "");
+    setEditing(false);
+  };
 
   return (
     <>
@@ -46,48 +53,89 @@ function AdminCard({ photo }: { photo: Photo }) {
           className="admin-card-img"
         />
         <div className="admin-card-body">
-          <input
-            className="admin-desc-input"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Nombre..."
-          />
-          <input
-            className="admin-desc-input"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-            placeholder="País..."
-          />
-          <textarea
-            className="admin-desc-input"
-            rows={2}
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-            placeholder="Descripción..."
-          />
-          <div className="admin-card-actions">
-            <button
-              className="btn-save"
-              disabled={saving || !isDirty}
-              onClick={() =>
-                updatePhoto({
-                  id: photo.id,
-                  Name: name,
-                  country,
-                  description: desc,
-                })
-              }
-            >
-              {saving ? "Guardando..." : "Guardar"}
-            </button>
-            <button
-              className="btn-delete"
-              disabled={deleting}
-              onClick={() => setConfirmOpen(true)}
-            >
-              {deleting ? "..." : "Eliminar"}
-            </button>
-          </div>
+          {editing ? (
+            <>
+              <div className="admin-field">
+                <label className="admin-field-label">Nombre</label>
+                <input
+                  className="admin-desc-input"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Nombre..."
+                  autoFocus
+                />
+              </div>
+              <div className="admin-field">
+                <label className="admin-field-label">País</label>
+                <select
+                  className="admin-desc-input admin-select"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                >
+                  <option value="">Seleccionar país...</option>
+                  {COUNTRIES.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="admin-field">
+                <label className="admin-field-label">Descripción</label>
+                <textarea
+                  className="admin-desc-input"
+                  rows={2}
+                  value={desc}
+                  onChange={(e) => setDesc(e.target.value)}
+                  placeholder="Descripción..."
+                />
+              </div>
+              <div className="admin-card-actions">
+                <button
+                  className="btn-save"
+                  disabled={saving}
+                  onClick={() =>
+                    updatePhoto({
+                      id: photo.id,
+                      Name: name,
+                      country,
+                      description: desc,
+                    })
+                  }
+                >
+                  {saving ? "Guardando..." : "Guardar"}
+                </button>
+                <button
+                  className="btn-cancel-edit"
+                  disabled={saving}
+                  onClick={handleCancel}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="admin-card-meta">
+                <p className="admin-meta-name">{name || <em className="admin-meta-empty">Sin nombre</em>}</p>
+                <p className="admin-meta-country">{country || <em className="admin-meta-empty">Sin país</em>}</p>
+                {desc && <p className="admin-meta-desc">{desc}</p>}
+              </div>
+              <div className="admin-card-actions">
+                <button
+                  className="btn-edit"
+                  onClick={() => setEditing(true)}
+                >
+                  Editar
+                </button>
+                <button
+                  className="btn-delete"
+                  disabled={deleting}
+                  onClick={() => setConfirmOpen(true)}
+                >
+                  {deleting ? "..." : "Eliminar"}
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
