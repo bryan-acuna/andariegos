@@ -203,7 +203,7 @@ function NewAdventure() {
               style={{
                 height: "100%",
                 width: "40%",
-                background: "#646cff",
+                background: "#2d6a4f",
                 borderRadius: 99,
                 animation: "slide 1.2s ease-in-out infinite",
               }}

@@ -21,7 +21,7 @@
 
 .btn-add {
   padding: 0.65rem 1.5rem;
-  background: #646cff;
+  background: #2d6a4f;
   color: #fff;
   font-size: 0.95rem;
   font-weight: 700;
@@ -31,7 +31,7 @@
 }
 
 .btn-add:hover {
-  background: #535bf2;
+  background: #1b4332;
 }
 
 /* ── Upload ─────────────────────────────────────── */
@@ -61,7 +61,7 @@
 }
 
 .admin-upload-area:hover {
-  border-color: #646cff;
+  border-color: #2d6a4f;
   background: #f5f5ff;
 }
 
@@ -99,7 +99,7 @@
 .upload-progress-indicator {
   height: 100%;
   width: 40%;
-  background: #646cff;
+  background: #2d6a4f;
   border-radius: 99px;
   animation: slide 1.2s ease-in-out infinite;
 }
@@ -204,7 +204,7 @@
 }
 
 .admin-desc-input:focus {
-  border-color: #646cff;
+  border-color: #2d6a4f;
   background: #fff;
 }
 
@@ -225,7 +225,7 @@
 .btn-save {
   flex: 1;
   padding: 0.55rem 0;
-  background: #646cff;
+  background: #2d6a4f;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -236,7 +236,7 @@
 }
 
 .btn-save:hover {
-  background: #535bf2;
+  background: #1b4332;
 }
 
 .btn-save:disabled {
@@ -259,8 +259,8 @@
 
 .btn-edit:hover {
   background: #e9eaff;
-  border-color: #646cff;
-  color: #646cff;
+  border-color: #2d6a4f;
+  color: #2d6a4f;
 }
 
 .btn-cancel-edit {

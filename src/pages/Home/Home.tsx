@@ -2,12 +2,28 @@ import "./Home.css";
 import hero from "../../assets/hero.jpg";
 import { Link } from "react-router-dom";
 
+const STATS = [
+  { value: "+30", label: "Montañas" },
+  { value: "10",  label: "Países"   },
+  { value: "+5000m", label: "Altitud"  },
+];
+
 function Home() {
   return (
     <>
       <div className="hero">
         <img src={hero} alt="Andariegos hero" className="hero-img" />
         <div className="hero-overlay" />
+
+        <aside className="hero-stats">
+          {STATS.map((s, i) => (
+            <div key={i} className="hero-stat">
+              <span className="hero-stat-value">{s.value}</span>
+              <span className="hero-stat-label">{s.label}</span>
+            </div>
+          ))}
+        </aside>
+
         <div className="hero-text">
           <p className="hero-bio">
             Soy Clever Acuña, ingeniero en sistemas ecuatoriano radicado en Houston, Texas,
@@ -20,7 +36,6 @@ function Home() {
           <Link to="/about" className="hero-btn">Sobre mí</Link>
         </div>
       </div>
-
     </>
   );
 }

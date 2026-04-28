@@ -20,11 +20,11 @@
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
   background: #fff;
-  border-left: 4px solid #646cff;
+  border-left: 4px solid #2d6a4f;
 
   &[data-type="success"] { border-left-color: #38a169; }
   &[data-type="error"]   { border-left-color: #e53e3e; }
-  &[data-type="info"]    { border-left-color: #646cff; }
+  &[data-type="info"]    { border-left-color: #2d6a4f; }
 }
 
 .toast-root[data-state="open"] {

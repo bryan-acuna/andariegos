@@ -62,7 +62,7 @@
 }
 
 .register-field input:focus {
-  border-color: #646cff;
+  border-color: #2d6a4f;
   box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.12);
 }
 
@@ -73,7 +73,7 @@
 }
 
 .btn-primary {
-  background: #646cff;
+  background: #2d6a4f;
   color: #fff;
   border: none;
   padding: 0.9rem;
@@ -86,13 +86,13 @@
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #535bf2;
+  background: #1b4332;
 }
 
 .btn-secondary {
   background: transparent;
-  color: #646cff;
-  border: 1.5px solid #646cff;
+  color: #2d6a4f;
+  border: 1.5px solid #2d6a4f;
   padding: 0.9rem;
   border-radius: 8px;
   font-size: 1rem;

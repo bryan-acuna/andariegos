@@ -1,0 +1,22 @@
+.about {
+  padding: 3rem 2rem;
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.about h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #213547;
+  margin-bottom: 2rem;
+}
+
+.about-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: #213547;
+}

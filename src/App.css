@@ -20,7 +20,7 @@
 }
 
 main {
-  padding-top: 160px;
+  padding-top: 108px;
 }
 
 .logo {
@@ -30,7 +30,7 @@ main {
 }
 
 .logo-img {
-  height: 140px;
+  height: 76px;
   width: auto;
 }
 
@@ -64,19 +64,33 @@ main {
 }
 
 .mobile-overlay {
-  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 290;
+  animation: fadeIn 0.2s ease;
 }
 
 .mobile-drawer {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 75vw;
+  max-width: 320px;
   background: #ffffff;
   z-index: 300;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation: fadeIn 0.2s ease;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.15);
+  animation: slideInRight 0.2s ease;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
 }
 
 .drawer-close {
@@ -110,7 +124,7 @@ main {
 
 .mobile-nav a:hover,
 .mobile-nav a.active {
-  color: #646cff;
+  color: #2d6a4f;
 }
 
 @keyframes fadeIn {
@@ -136,7 +150,7 @@ main {
 }
 
 .navbar a.active {
-  color: #646cff;
+  color: #2d6a4f;
 }
 
 .social-links {
@@ -154,7 +168,7 @@ main {
 }
 
 .social-links a:hover {
-  color: #646cff;
+  color: #2d6a4f;
 }
 
 .page {
@@ -223,7 +237,7 @@ main {
   }
 
   main {
-    padding-top: 120px;
+    padding-top: 96px;
   }
 
   .page {

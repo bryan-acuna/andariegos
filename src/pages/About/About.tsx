@@ -1,10 +1,10 @@
+import "./About.css";
+
 function About() {
   return (
-    <div style={{ padding: "3rem 2rem", maxWidth: 720, margin: "0 auto", textAlign: "left" }}>
-      <h1 style={{ fontSize: "2rem", fontWeight: 800, color: "#213547", marginBottom: "2rem" }}>
-        Sobre mí
-      </h1>
-      <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", fontSize: "1.1rem", lineHeight: 1.9, color: "#213547" }}>
+    <div className="about">
+      <h1>Sobre mí</h1>
+      <div className="about-body">
         <p>
           Mi nombre es Clever Acuña, nací en el año 1970 y soy ingeniero en sistemas.
           Soy ecuatoriano y actualmente vivo en Houston, Texas.

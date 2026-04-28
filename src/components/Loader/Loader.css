@@ -12,7 +12,7 @@
   width: 44px;
   height: 44px;
   border: 3.5px solid #e5e5e5;
-  border-top-color: #646cff;
+  border-top-color: #2d6a4f;
   border-radius: 50%;
   animation: spin 0.75s linear infinite;
 }
@@ -34,7 +34,7 @@
 .loader-progress-indicator {
   height: 100%;
   width: 40%;
-  background: #646cff;
+  background: #2d6a4f;
   border-radius: 99px;
   animation: slide 1.2s ease-in-out infinite;
   transform-origin: left;
