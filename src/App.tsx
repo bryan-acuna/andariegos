@@ -10,7 +10,6 @@ import "./App.css";
 import Layout from "./pages/Layout";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastProvider } from "./components/Toast";
-import ImageUploader from "./pages/ImageUploader";
 import NewAdventure from "./pages/NewAdventure";
 import About from "./pages/About";
 import Admin from "./pages/Admin";
@@ -25,7 +24,7 @@ const queryClient = new QueryClient();
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const { session, loading } = useAuth();
   if (loading) return null;
-  return session ? children : <Navigate to="/register" replace />;
+  return session ? children : <Navigate to="/login" replace />;
 };
 
 const router = createBrowserRouter([
@@ -36,14 +35,6 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "montanas", element: <Montanas /> },
       { path: "contact", element: <Contact /> },
-      {
-        path: "login",
-        element: (
-          <ProtectedRoute>
-            <ImageUploader />
-          </ProtectedRoute>
-        ),
-      },
       { path: "newadventure", element: <NewAdventure /> },
       { path: "about", element: <About /> },
       {
@@ -55,7 +46,7 @@ const router = createBrowserRouter([
         ),
       },
       { path: "mapa", element: <Mapa /> },
-      { path: "register", element: <Login /> },
+      { path: "login", element: <Login /> },
     ],
   },
 ]);

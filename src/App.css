@@ -1,7 +1,7 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: var(--space-6);
   text-align: center;
 }
 
@@ -13,7 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: var(--space-4) var(--space-6);
   background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(8px);
   z-index: 100;
@@ -51,24 +51,24 @@ main {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.4rem;
+  padding: var(--space-2);
 }
 
 .hamburger span {
   display: block;
   width: 24px;
   height: 2px;
-  background: #213547;
+  background: var(--color-ink);
   border-radius: 2px;
-  transition: background 0.2s;
+  transition: background var(--transition-fast);
 }
 
 .mobile-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--color-overlay-scrim);
   z-index: 290;
-  animation: fadeIn 0.2s ease;
+  animation: fadeIn var(--transition-fast) ease;
 }
 
 .mobile-drawer {
@@ -78,14 +78,14 @@ main {
   bottom: 0;
   width: 75vw;
   max-width: 320px;
-  background: #ffffff;
+  background: var(--color-surface);
   z-index: 300;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   box-shadow: -4px 0 16px rgba(0, 0, 0, 0.15);
-  animation: slideInRight 0.2s ease;
+  animation: slideInRight var(--transition-fast) ease;
 }
 
 @keyframes slideInRight {
@@ -95,36 +95,36 @@ main {
 
 .drawer-close {
   position: absolute;
-  top: 1.25rem;
-  right: 1.25rem;
+  top: var(--space-5);
+  right: var(--space-5);
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #213547;
+  color: var(--color-ink);
   cursor: pointer;
   line-height: 1;
-  padding: 0.25rem;
+  padding: var(--space-1);
 }
 
 .mobile-nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: var(--space-6);
 }
 
 .mobile-nav a {
   font-size: 2rem;
   font-weight: 700;
-  color: #213547;
+  color: var(--color-ink);
   text-decoration: none;
   letter-spacing: 0.02em;
-  transition: color 0.2s;
+  transition: color var(--transition-fast);
 }
 
 .mobile-nav a:hover,
 .mobile-nav a.active {
-  color: #2d6a4f;
+  color: var(--color-brand);
 }
 
 @keyframes fadeIn {
@@ -134,49 +134,73 @@ main {
 
 .navbar {
   display: flex;
-  gap: 2rem;
+  gap: var(--space-6);
 }
 
 .navbar a {
-  color: #555;
+  position: relative;
+  color: var(--color-ink-muted);
   text-decoration: none;
   font-size: 1.1rem;
-  padding: 0.5rem 1rem;
-  transition: color 0.2s;
+  padding: var(--space-2) 0;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.navbar a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: var(--color-brand);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--transition-base) ease;
 }
 
 .navbar a:hover {
-  color: rgba(100, 108, 255, 0.6);
+  color: var(--color-brand);
+}
+
+.navbar a:hover::after {
+  transform: scaleX(0.5);
 }
 
 .navbar a.active {
-  color: #2d6a4f;
+  color: var(--color-brand);
+  font-weight: 700;
+}
+
+.navbar a.active::after {
+  transform: scaleX(1);
 }
 
 .social-links {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .social-links a {
-  color: #555;
+  color: var(--color-ink-muted);
   display: flex;
   align-items: center;
-  transition: color 0.2s;
+  transition: color var(--transition-fast);
 }
 
 .social-links a:hover {
-  color: #2d6a4f;
+  color: var(--color-brand);
 }
 
 .page {
-  padding: 2rem;
+  padding: var(--space-6);
 }
 
 .page h1 {
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
 }
 
 .page ul {
@@ -185,18 +209,18 @@ main {
 }
 
 .page li {
-  margin: 0.5rem 0;
+  margin: var(--space-2) 0;
 }
 
 @media (max-width: 768px) {
   #root {
-    padding: 1rem;
+    padding: var(--space-4);
   }
 
   .header {
     grid-template-columns: auto 1fr auto;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
   }
 
   .navbar {
@@ -228,12 +252,12 @@ main {
   }
 
   .navbar {
-    gap: 1rem;
+    gap: var(--space-4);
   }
 
   .navbar a {
     font-size: 1rem;
-    padding: 0.5rem;
+    padding: var(--space-2);
   }
 
   main {
@@ -241,7 +265,7 @@ main {
   }
 
   .page {
-    padding: 1rem;
+    padding: var(--space-4);
   }
 
   .page h1 {

@@ -25,15 +25,15 @@ const Login = () => {
   };
 
   return (
-    <div className="register-page">
-      <div className="register-card">
+    <div className="login-page">
+      <div className="login-card">
         <h1>Bienvenido</h1>
-        <p className="register-subtitle">Inicia sesión o crea una cuenta</p>
+        <p className="login-subtitle">Inicia sesión o crea una cuenta</p>
 
-        {error && <p className="register-error">{error}</p>}
+        {error && <p className="login-error">{error}</p>}
 
-        <div className="register-fields">
-          <div className="register-field">
+        <div className="login-fields">
+          <div className="login-field">
             <label htmlFor="email">Correo electrónico</label>
             <input
               id="email"
@@ -43,7 +43,7 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="register-field">
+          <div className="login-field">
             <label htmlFor="password">Contraseña</label>
             <input
               id="password"
@@ -55,7 +55,7 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="register-actions">
+        <div className="login-actions">
           <button
             className="btn-primary"
             onClick={handleSignIn}

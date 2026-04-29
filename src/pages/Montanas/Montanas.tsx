@@ -3,14 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { usePhotos } from "../../hooks/usePhotos";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Loader } from "../../components";
-
-type Photo = {
-  id: number;
-  image_url: string;
-  Name?: string;
-  country?: string;
-  description?: string;
-};
+import type { Photo } from "../../types/photo.types";
 
 const MOBILE_BREAKPOINT = 768;
 const MOBILE_PAGE_SIZE = 5;
@@ -62,7 +55,7 @@ function Montanas() {
           <img
             key={photo.id}
             src={photo.image_url}
-            alt={photo.description}
+            alt={photo.description ?? ""}
             className="grid-photo"
             onClick={() => setSelected(photo)}
           />
@@ -80,7 +73,7 @@ function Montanas() {
             </Dialog.Title>
             <img
               src={selected?.image_url}
-              alt={selected?.Name}
+              alt={selected?.Name ?? ""}
               className="dialog-image"
             />
             <div className="dialog-meta">

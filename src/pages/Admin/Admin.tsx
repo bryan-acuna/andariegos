@@ -8,15 +8,7 @@ import { useDeletePhoto } from "../../hooks/useDeletePhoto";
 import { useUpdatePhoto } from "../../hooks/useUpdatePhoto";
 import { usePhotos } from "../../hooks/usePhotos";
 import { COUNTRIES } from "../../lib/countries";
-
-type Photo = {
-  id: number;
-  created_at: string;
-  image_url: string;
-  Name?: string;
-  country?: string;
-  description?: string;
-};
+import type { Photo } from "../../types/photo.types";
 
 function AdminCard({ photo }: { photo: Photo }) {
   const [editing, setEditing] = useState(false);
@@ -49,7 +41,7 @@ function AdminCard({ photo }: { photo: Photo }) {
       <div className="admin-card">
         <img
           src={photo.image_url}
-          alt={photo.Name ?? photo.description}
+          alt={photo.Name ?? photo.description ?? ""}
           className="admin-card-img"
         />
         <div className="admin-card-body">
@@ -185,7 +177,7 @@ function Admin() {
       {photos && (
         <div className="admin-grid">
           {photos.map((photo) => (
-            <AdminCard key={photo.id} photo={photo as Photo} />
+            <AdminCard key={photo.id} photo={photo} />
           ))}
         </div>
       )}

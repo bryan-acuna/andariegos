@@ -10,12 +10,13 @@ import * as Dialog from "@radix-ui/react-dialog";
 
 import type { Geography as GeoType } from "react-simple-maps";
 import "./Mapa.css";
-import { usePhotos, type Photo } from "../../hooks/usePhotos";
+import { usePhotos } from "../../hooks/usePhotos";
+import type { Photo } from "../../types/photo.types";
+import { getCountryMeta } from "../../lib/countries";
 
 const GEO_URL =
   "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
-// Color palette — cycles through for as many countries as needed
 const PALETTE = [
   "#3b82f6",
   "#ef4444",
@@ -28,239 +29,6 @@ const PALETTE = [
   "#84cc16",
   "#6366f1",
 ];
-
-// Country name (as stored in DB) → { iso, coords, canonical display name, aliases }
-type CountryMeta = {
-  iso: number;
-  coords: [number, number];
-  label: string;
-  aliases: string[];
-};
-
-const COUNTRY_META: Record<string, CountryMeta> = {
-  Argentina: {
-    iso: 32,
-    coords: [-63.6167, -38.4161],
-    label: "Argentina",
-    aliases: ["Argentina"],
-  },
-  Chile: {
-    iso: 152,
-    coords: [-71.543, -35.6751],
-    label: "Chile",
-    aliases: ["Chile"],
-  },
-  Ecuador: {
-    iso: 218,
-    coords: [-78.4678, -1.8312],
-    label: "Ecuador",
-    aliases: ["Ecuador"],
-  },
-  Perú: {
-    iso: 604,
-    coords: [-75.0152, -9.19],
-    label: "Perú",
-    aliases: ["Perú", "Peru"],
-  },
-  Peru: {
-    iso: 604,
-    coords: [-75.0152, -9.19],
-    label: "Perú",
-    aliases: ["Perú", "Peru"],
-  },
-  USA: {
-    iso: 840,
-    coords: [-95.7129, 37.0902],
-    label: "USA",
-    aliases: ["USA", "United States", "Estados Unidos"],
-  },
-  "United States": {
-    iso: 840,
-    coords: [-95.7129, 37.0902],
-    label: "USA",
-    aliases: ["USA", "United States", "Estados Unidos"],
-  },
-  "Estados Unidos": {
-    iso: 840,
-    coords: [-95.7129, 37.0902],
-    label: "USA",
-    aliases: ["USA", "United States", "Estados Unidos"],
-  },
-  "Costa Rica": {
-    iso: 188,
-    coords: [-83.7534, 9.7489],
-    label: "Costa Rica",
-    aliases: ["Costa Rica"],
-  },
-  Colombia: {
-    iso: 170,
-    coords: [-74.2973, 4.5709],
-    label: "Colombia",
-    aliases: ["Colombia"],
-  },
-  Bolivia: {
-    iso: 68,
-    coords: [-64.9631, -16.2902],
-    label: "Bolivia",
-    aliases: ["Bolivia"],
-  },
-  Venezuela: {
-    iso: 862,
-    coords: [-66.5897, 6.4238],
-    label: "Venezuela",
-    aliases: ["Venezuela"],
-  },
-  Brasil: {
-    iso: 76,
-    coords: [-51.9253, -14.235],
-    label: "Brasil",
-    aliases: ["Brasil", "Brazil"],
-  },
-  Brazil: {
-    iso: 76,
-    coords: [-51.9253, -14.235],
-    label: "Brasil",
-    aliases: ["Brasil", "Brazil"],
-  },
-  México: {
-    iso: 484,
-    coords: [-102.5528, 23.6345],
-    label: "México",
-    aliases: ["México", "Mexico"],
-  },
-  Mexico: {
-    iso: 484,
-    coords: [-102.5528, 23.6345],
-    label: "México",
-    aliases: ["México", "Mexico"],
-  },
-  España: {
-    iso: 724,
-    coords: [-3.7492, 40.4637],
-    label: "España",
-    aliases: ["España", "Spain"],
-  },
-  Spain: {
-    iso: 724,
-    coords: [-3.7492, 40.4637],
-    label: "España",
-    aliases: ["España", "Spain"],
-  },
-  Francia: {
-    iso: 250,
-    coords: [2.3522, 48.8566],
-    label: "Francia",
-    aliases: ["Francia", "France"],
-  },
-  France: {
-    iso: 250,
-    coords: [2.3522, 48.8566],
-    label: "Francia",
-    aliases: ["Francia", "France"],
-  },
-  Italia: {
-    iso: 380,
-    coords: [12.5674, 41.8719],
-    label: "Italia",
-    aliases: ["Italia", "Italy"],
-  },
-  Italy: {
-    iso: 380,
-    coords: [12.5674, 41.8719],
-    label: "Italia",
-    aliases: ["Italia", "Italy"],
-  },
-  Alemania: {
-    iso: 276,
-    coords: [10.4515, 51.1657],
-    label: "Alemania",
-    aliases: ["Alemania", "Germany"],
-  },
-  Germany: {
-    iso: 276,
-    coords: [10.4515, 51.1657],
-    label: "Alemania",
-    aliases: ["Alemania", "Germany"],
-  },
-  Canadá: {
-    iso: 124,
-    coords: [-96.8165, 56.1304],
-    label: "Canadá",
-    aliases: ["Canadá", "Canada"],
-  },
-  Canada: {
-    iso: 124,
-    coords: [-96.8165, 56.1304],
-    label: "Canadá",
-    aliases: ["Canadá", "Canada"],
-  },
-  Nepal: {
-    iso: 524,
-    coords: [84.124, 28.3949],
-    label: "Nepal",
-    aliases: ["Nepal"],
-  },
-  Tanzania: {
-    iso: 834,
-    coords: [34.8888, -6.369],
-    label: "Tanzania",
-    aliases: ["Tanzania"],
-  },
-  Kenia: {
-    iso: 404,
-    coords: [37.9062, -0.0236],
-    label: "Kenia",
-    aliases: ["Kenia", "Kenya"],
-  },
-  Kenya: {
-    iso: 404,
-    coords: [37.9062, -0.0236],
-    label: "Kenia",
-    aliases: ["Kenia", "Kenya"],
-  },
-  Japón: {
-    iso: 392,
-    coords: [138.2529, 36.2048],
-    label: "Japón",
-    aliases: ["Japón", "Japan"],
-  },
-  Japan: {
-    iso: 392,
-    coords: [138.2529, 36.2048],
-    label: "Japón",
-    aliases: ["Japón", "Japan"],
-  },
-  Australia: {
-    iso: 36,
-    coords: [133.7751, -25.2744],
-    label: "Australia",
-    aliases: ["Australia"],
-  },
-  Suiza: {
-    iso: 756,
-    coords: [8.2275, 46.8182],
-    label: "Suiza",
-    aliases: ["Suiza", "Switzerland"],
-  },
-  Switzerland: {
-    iso: 756,
-    coords: [8.2275, 46.8182],
-    label: "Suiza",
-    aliases: ["Suiza", "Switzerland"],
-  },
-  Noruega: {
-    iso: 578,
-    coords: [8.4689, 60.472],
-    label: "Noruega",
-    aliases: ["Noruega", "Norway"],
-  },
-  Norway: {
-    iso: 578,
-    coords: [8.4689, 60.472],
-    label: "Noruega",
-    aliases: ["Noruega", "Norway"],
-  },
-};
 
 type Pin = {
   name: string;
@@ -292,8 +60,7 @@ export default function Mapa() {
     let colorIdx = 0;
 
     photos?.forEach((p) => {
-      if (!p.country) return;
-      const meta = COUNTRY_META[p.country];
+      const meta = getCountryMeta(p.country);
       if (!meta || seen.has(meta.iso)) return;
       seen.add(meta.iso);
       result.push({

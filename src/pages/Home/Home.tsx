@@ -15,25 +15,30 @@ function Home() {
         <img src={hero} alt="Andariegos hero" className="hero-img" />
         <div className="hero-overlay" />
 
-        <aside className="hero-stats">
-          {STATS.map((s, i) => (
-            <div key={i} className="hero-stat">
-              <span className="hero-stat-value">{s.value}</span>
-              <span className="hero-stat-label">{s.label}</span>
-            </div>
-          ))}
-        </aside>
-
         <div className="hero-text">
+          <h1 className="hero-name">Clever Acuña</h1>
+          <p className="hero-tagline">Andinista desde 1986 · Ecuador → Houston</p>
           <p className="hero-bio">
-            Soy Clever Acuña, ingeniero en sistemas ecuatoriano radicado en Houston, Texas,
-            y desde 1986 el andinismo es la pasión que define mi vida. Hace cuatro años,
-            mi visión de escalar transformó: cada cumbre ya no es solo una meta, sino una
-            prueba de que los límites están en la mente, no en el cuerpo. Hoy escalo para
-            inspirar a otros, demostrando que con voluntad, disciplina y fe en uno mismo,
-            siempre es posible seguir adelante y redefinir nuestros sueños.
+            Escalo para inspirar — porque los límites están en la mente, no en el cuerpo.
           </p>
-          <Link to="/about" className="hero-btn">Sobre mí</Link>
+
+          <dl className="hero-stats">
+            {STATS.map((s, i) => (
+              <div key={i} className="hero-stat">
+                <dt className="hero-stat-value">{s.value}</dt>
+                <dd className="hero-stat-label">{s.label}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="hero-cta-group">
+            <Link to="/montanas" className="hero-btn hero-btn-primary">
+              Ver montañas
+            </Link>
+            <Link to="/about" className="hero-btn hero-btn-secondary">
+              Sobre mí
+            </Link>
+          </div>
         </div>
       </div>
     </>
