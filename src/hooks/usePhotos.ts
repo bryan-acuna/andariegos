@@ -1,16 +1,6 @@
-// src/lib/usePhotos.ts
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "../lib/supabase";
-
-// Define the shape of your data for TypeScript
-export interface Photo {
-  id: number;
-  created_at: string;
-  image_url: string;
-  Name?: string;
-  country?: string;
-  description?: string;
-}
+import type { Photo } from "../types/photo.types";
 
 export function usePhotos() {
   return useQuery<Photo[]>({

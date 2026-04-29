@@ -1,4 +1,4 @@
-.register-page {
+.login-page {
   min-height: calc(100vh - 160px);
   display: flex;
   align-items: center;
@@ -6,7 +6,7 @@
   padding: 2rem;
 }
 
-.register-card {
+.login-card {
   background: #fff;
   border: 1.5px solid #e5e7eb;
   border-radius: 16px;
@@ -17,39 +17,39 @@
   text-align: left;
 }
 
-.register-card h1 {
+.login-card h1 {
   font-size: 1.75rem;
   font-weight: 800;
   color: #213547;
   margin-bottom: 0.375rem;
 }
 
-.register-subtitle {
+.login-subtitle {
   font-size: 0.9rem;
   color: #888;
   margin-bottom: 2rem;
 }
 
-.register-fields {
+.login-fields {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
   margin-bottom: 1.5rem;
 }
 
-.register-field {
+.login-field {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
 }
 
-.register-field label {
+.login-field label {
   font-size: 0.9rem;
   font-weight: 600;
   color: #213547;
 }
 
-.register-field input {
+.login-field input {
   padding: 0.8rem 1rem;
   border: 1.5px solid #d1d5db;
   border-radius: 8px;
@@ -61,12 +61,12 @@
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.register-field input:focus {
+.login-field input:focus {
   border-color: #2d6a4f;
   box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.12);
 }
 
-.register-actions {
+.login-actions {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -112,7 +112,7 @@
   cursor: not-allowed;
 }
 
-.register-error {
+.login-error {
   font-size: 0.875rem;
   color: #e53e3e;
   background: #fff5f5;
@@ -122,7 +122,7 @@
   margin-bottom: 1rem;
 }
 
-.register-success {
+.login-success {
   font-size: 0.875rem;
   color: #276749;
   background: #f0fff4;
@@ -133,7 +133,7 @@
 }
 
 @media (max-width: 480px) {
-  .register-card {
+  .login-card {
     padding: 2rem 1.25rem;
   }
 }
