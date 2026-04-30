@@ -11,6 +11,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import type { Geography as GeoType } from "react-simple-maps";
 import "./Mapa.css";
 import { usePhotos } from "../../hooks/usePhotos";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import type { Photo } from "../../types/photo.types";
 import { getCountryMeta } from "../../lib/countries";
 
@@ -41,6 +42,7 @@ type Pin = {
 type TooltipState = { x: number; y: number; name: string } | null;
 
 export default function Mapa() {
+  useDocumentTitle("Mapa de destinos · Andariegos");
   const { data: photos } = usePhotos();
   const [tooltip, setTooltip] = useState<TooltipState>(null);
   const [selected, setSelected] = useState<string | null>(null);

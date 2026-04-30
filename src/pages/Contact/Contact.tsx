@@ -1,7 +1,10 @@
 import * as Form from "@radix-ui/react-form";
 import "./Contact.css";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 function Contact() {
+  useDocumentTitle("Contactar · Andariegos");
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));

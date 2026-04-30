@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
+  useDocumentTitle("Iniciar sesión · Andariegos");
   const { signIn } = useAuth();
   const navigate = useNavigate();
 

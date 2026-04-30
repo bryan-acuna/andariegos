@@ -1,25 +1,36 @@
+import { lazy, Suspense, type JSX } from "react";
 import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import Home from "./pages/Home";
-import Contact from "./pages/Contact";
-import Montanas from "./pages/Montanas";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import "./App.css";
 import Layout from "./pages/Layout";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ToastProvider } from "./components/Toast";
-import NewAdventure from "./pages/NewAdventure";
-import About from "./pages/About";
-import Admin from "./pages/Admin";
-import Mapa from "./pages/Mapa";
+import Home from "./pages/Home";
 import { AuthProvider } from "./context/Authcontext";
 import { useAuth } from "./hooks/useAuth";
-import type { JSX } from "react";
-import Login from "./pages/Login";
+import { ErrorBoundary, Loader, ToastProvider } from "./components";
 
-const queryClient = new QueryClient();
+// Lazy-loaded routes — keep them out of the initial bundle.
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Montanas = lazy(() => import("./pages/Montanas"));
+const Mapa = lazy(() => import("./pages/Mapa"));
+const Login = lazy(() => import("./pages/Login"));
+const Admin = lazy(() => import("./pages/Admin"));
+const NewAdventure = lazy(() => import("./pages/NewAdventure"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60_000,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const { session, loading } = useAuth();
@@ -27,39 +38,49 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   return session ? children : <Navigate to="/login" replace />;
 };
 
+const withSuspense = (node: JSX.Element) => (
+  <Suspense fallback={<Loader />}>{node}</Suspense>
+);
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
       { index: true, element: <Home /> },
-      { path: "montanas", element: <Montanas /> },
-      { path: "contact", element: <Contact /> },
-      { path: "newadventure", element: <NewAdventure /> },
-      { path: "about", element: <About /> },
+      { path: "about", element: withSuspense(<About />) },
+      { path: "contact", element: withSuspense(<Contact />) },
+      { path: "montanas", element: withSuspense(<Montanas />) },
+      { path: "mapa", element: withSuspense(<Mapa />) },
+      { path: "login", element: withSuspense(<Login />) },
       {
         path: "admin",
         element: (
-          <ProtectedRoute>
-            <Admin />
-          </ProtectedRoute>
+          <ProtectedRoute>{withSuspense(<Admin />)}</ProtectedRoute>
         ),
       },
-      { path: "mapa", element: <Mapa /> },
-      { path: "login", element: <Login /> },
+      {
+        path: "newadventure",
+        element: (
+          <ProtectedRoute>{withSuspense(<NewAdventure />)}</ProtectedRoute>
+        ),
+      },
+      { path: "*", element: withSuspense(<NotFound />) },
     ],
   },
 ]);
 
 function App() {
   return (
-    <AuthProvider>
-      <QueryClientProvider client={queryClient}>
-        <ToastProvider>
-          <RouterProvider router={router} />
-        </ToastProvider>
-      </QueryClientProvider>
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <ToastProvider>
+            <RouterProvider router={router} />
+          </ToastProvider>
+        </QueryClientProvider>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 

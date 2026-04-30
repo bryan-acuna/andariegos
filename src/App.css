@@ -5,6 +5,48 @@
   text-align: center;
 }
 
+/* ── A11y utilities ────────────────────────────────── */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: var(--space-3);
+  background: var(--color-brand);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  z-index: 1000;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: var(--space-3);
+}
+
+/* Visible focus ring across interactive elements that override default. */
+.hero-btn:focus-visible,
+.navbar a:focus-visible,
+.mobile-nav a:focus-visible,
+.drawer-close:focus-visible,
+.hamburger:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
 .header {
   position: fixed;
   top: 0;

@@ -1,13 +1,15 @@
 import { useState } from "react";
 import * as Progress from "@radix-ui/react-progress";
 import { useNavigate } from "react-router-dom";
-import { uploadImage } from "../../lib/uploadImage";
+import { uploadImage, type UploadResult } from "../../lib/uploadImage";
 import { supabase } from "../../lib/supabase";
 import { useToast } from "../../components";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { COUNTRIES } from "../../lib/countries";
 import "./NewAdventure.css";
 
 function NewAdventure() {
+  useDocumentTitle("Nueva aventura · Andariegos");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -52,21 +54,28 @@ function NewAdventure() {
     }
 
     setSubmitting(true);
+
+    // Track uploads so we can roll back storage if the DB insert fails.
+    const uploaded: UploadResult[] = [];
+
     try {
+      // Phase 1 — upload every file; fail fast on the first storage error.
       for (const photo of photos) {
-        const image_url = await uploadImage(photo.file, "andariegos");
-        const { error: dbError } = await supabase
-          .from("Images")
-          .insert([
-            {
-              Name: name.trim(),
-              country: country.trim(),
-              description: description.trim(),
-              image_url,
-            },
-          ]);
-        if (dbError) throw new Error(dbError.message);
+        const result = await uploadImage(photo.file, "andariegos");
+        uploaded.push(result);
       }
+
+      // Phase 2 — single bulk insert so all rows land atomically.
+      const { error: dbError } = await supabase.from("Images").insert(
+        uploaded.map((u) => ({
+          Name: name.trim(),
+          country: country.trim(),
+          description: description.trim() || null,
+          image_url: u.publicUrl,
+        })),
+      );
+      if (dbError) throw new Error(dbError.message);
+
       toast(
         "success",
         "Aventura guardada",
@@ -74,6 +83,13 @@ function NewAdventure() {
       );
       navigate("/admin");
     } catch (err: unknown) {
+      // Rollback: remove any files we already uploaded to avoid orphaned blobs.
+      if (uploaded.length > 0) {
+        await supabase.storage
+          .from("andariegos")
+          .remove(uploaded.map((u) => u.path))
+          .catch(() => undefined); // best-effort; don't mask the real error
+      }
       const msg = err instanceof Error ? err.message : "Error al guardar.";
       setError(msg);
       toast("error", "Error al guardar", msg);

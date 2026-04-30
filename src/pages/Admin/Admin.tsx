@@ -7,6 +7,7 @@ import { useToast, Loader } from "../../components";
 import { useDeletePhoto } from "../../hooks/useDeletePhoto";
 import { useUpdatePhoto } from "../../hooks/useUpdatePhoto";
 import { usePhotos } from "../../hooks/usePhotos";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { COUNTRIES } from "../../lib/countries";
 import type { Photo } from "../../types/photo.types";
 
@@ -161,6 +162,7 @@ function AdminCard({ photo }: { photo: Photo }) {
 }
 
 function Admin() {
+  useDocumentTitle("Gestionar fotos · Andariegos");
   const { data: photos, isLoading, isError } = usePhotos();
 
   return (
