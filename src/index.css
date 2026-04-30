@@ -6,9 +6,10 @@
 
   /* ── Neutral palette ───────────────────────────── */
   --color-ink: #213547;
-  --color-ink-muted: #555;
+  --color-ink-muted: #666;
   --color-surface: #ffffff;
-  --color-surface-soft: #f9f9f9;
+  --color-surface-soft: #faf7f2;   /* warm cream */
+  --color-warm-border: rgba(180, 155, 110, 0.18);
 
   /* ── Overlays ──────────────────────────────────── */
   --color-overlay-top: rgba(0, 0, 0, 0.1);

@@ -12,6 +12,7 @@ const Layout = () => {
       <header className="header">
         <NavLink to="/" end className="logo" aria-label="Andariegos — Inicio">
           <img src={logo} alt="" className="logo-img" />
+          <span className="brand-name">Andariegos</span>
         </NavLink>
 
         {/* Desktop nav */}

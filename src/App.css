@@ -55,14 +55,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-4) var(--space-6);
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(8px);
+  padding: var(--space-3) var(--space-6);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-warm-border);
   z-index: 100;
 }
 
 main {
-  padding-top: 108px;
+  padding-top: 68px;
 }
 
 .logo {
@@ -72,8 +74,19 @@ main {
 }
 
 .logo-img {
-  height: 76px;
+  height: 36px;
   width: auto;
+  border-radius: var(--radius-sm);
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-ink);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-left: var(--space-3);
 }
 
 .mountain-icon {
@@ -303,7 +316,7 @@ main {
   }
 
   main {
-    padding-top: 96px;
+    padding-top: 64px;
   }
 
   .page {
