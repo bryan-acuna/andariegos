@@ -1,18 +1,54 @@
+import { useMemo } from "react";
 import "./Home.css";
 import hero from "../../assets/hero.jpg";
 import { Link } from "react-router-dom";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
+import { usePhotos } from "../../hooks/usePhotos";
+import { getCountryMeta } from "../../lib/countries";
 
-const STATS = [
-  { value: "+30", label: "Montañas" },
-  { value: "10",  label: "Países"   },
-  { value: "+5000m", label: "Altitud"  },
-];
+// Years climbing — anchor on his start year so it stays accurate.
+const FIRST_CLIMB_YEAR = 1986;
 
 function Home() {
+  useDocumentTitle();
+  const { data: photos } = usePhotos();
+
+  const stats = useMemo(() => {
+    const yearsClimbing = new Date().getFullYear() - FIRST_CLIMB_YEAR;
+
+    // Unique adventures by name (multiple photos per climb collapse to one).
+    const adventures = new Set(
+      (photos ?? []).map((p) => p.Name).filter((name): name is string => !!name),
+    );
+
+    // Unique countries via the alias-aware lookup so "Brasil" and "Brazil" collapse.
+    const countries = new Set(
+      (photos ?? [])
+        .map((p) => getCountryMeta(p.country)?.label)
+        .filter((label): label is string => !!label),
+    );
+
+    return [
+      { value: `${yearsClimbing}`, label: "Años en la montaña" },
+      {
+        value: adventures.size > 0 ? `+${adventures.size}` : "—",
+        label: "Aventuras",
+      },
+      {
+        value: countries.size > 0 ? `${countries.size}` : "—",
+        label: countries.size === 1 ? "País" : "Países",
+      },
+    ];
+  }, [photos]);
+
   return (
     <>
       <div className="hero">
-        <img src={hero} alt="Andariegos hero" className="hero-img" />
+        <img
+          src={hero}
+          alt="Clever Acuña en una expedición de andinismo"
+          className="hero-img"
+        />
         <div className="hero-overlay" />
 
         <div className="hero-text">
@@ -23,8 +59,8 @@ function Home() {
           </p>
 
           <dl className="hero-stats">
-            {STATS.map((s, i) => (
-              <div key={i} className="hero-stat">
+            {stats.map((s) => (
+              <div key={s.label} className="hero-stat">
                 <dt className="hero-stat-value">{s.value}</dt>
                 <dd className="hero-stat-label">{s.label}</dd>
               </div>

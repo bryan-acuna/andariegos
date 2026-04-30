@@ -1,6 +1,9 @@
 import "./About.css";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 function About() {
+  useDocumentTitle("Sobre mí · Andariegos");
+
   return (
     <div className="about">
       <h1>Sobre mí</h1>

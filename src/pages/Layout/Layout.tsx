@@ -5,13 +5,17 @@ import logo from "../../assets/logo.png";
 const Layout = () => {
   return (
     <div>
+      <a href="#main" className="skip-link">
+        Saltar al contenido
+      </a>
+
       <header className="header">
-        <NavLink to="/" end className="logo">
-          <img src={logo} alt="Andariegos" className="logo-img" />
+        <NavLink to="/" end className="logo" aria-label="Andariegos — Inicio">
+          <img src={logo} alt="" className="logo-img" />
         </NavLink>
 
         {/* Desktop nav */}
-        <nav className="navbar">
+        <nav className="navbar" aria-label="Navegación principal">
           <NavLink to="/" end>Mi historia</NavLink>
           <NavLink to="/about">Sobre mí</NavLink>
           <NavLink to="/montanas">Montañas</NavLink>
@@ -30,9 +34,15 @@ const Layout = () => {
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Overlay className="mobile-overlay" />
-            <Dialog.Content className="mobile-drawer">
-              <Dialog.Close className="drawer-close">✕</Dialog.Close>
-              <nav className="mobile-nav">
+            <Dialog.Content
+              className="mobile-drawer"
+              aria-label="Menú de navegación"
+            >
+              <Dialog.Title className="visually-hidden">Menú</Dialog.Title>
+              <Dialog.Close className="drawer-close" aria-label="Cerrar menú">
+                <span aria-hidden="true">✕</span>
+              </Dialog.Close>
+              <nav className="mobile-nav" aria-label="Navegación móvil">
                 <Dialog.Close asChild>
                   <NavLink to="/" end>Mi historia</NavLink>
                 </Dialog.Close>
@@ -53,7 +63,7 @@ const Layout = () => {
           </Dialog.Portal>
         </Dialog.Root>
       </header>
-      <main>
+      <main id="main">
         <Outlet />
       </main>
     </div>

@@ -1,6 +1,7 @@
 import "./Montanas.css";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { usePhotos } from "../../hooks/usePhotos";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Loader } from "../../components";
 import type { Photo } from "../../types/photo.types";
@@ -14,6 +15,7 @@ function getPageSize() {
 }
 
 function Montanas() {
+  useDocumentTitle("Montañas · Andariegos");
   const { data: photos, isLoading, isError } = usePhotos();
   const [selected, setSelected] = useState<Photo | null>(null);
   const [visible, setVisible] = useState(() => getPageSize());

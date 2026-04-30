@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { uploadImage } from "../../lib/uploadImage";
 import { supabase } from "../../lib/supabase";
 import { useToast } from "../../components";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { COUNTRIES } from "../../lib/countries";
 import "./NewAdventure.css";
 
 function NewAdventure() {
+  useDocumentTitle("Nueva aventura · Andariegos");
   const navigate = useNavigate();
   const { toast } = useToast();
 

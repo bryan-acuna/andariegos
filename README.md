@@ -1,73 +1,69 @@
-# React + TypeScript + Vite
+# Andariegos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal site for **Clever Acuña** — andinista desde 1986, ingeniero ecuatoriano radicado en Houston.
 
-Currently, two official plugins are available:
+Photo gallery, interactive map of visited countries, and a small admin area for adding/editing entries.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Stack
 
-## React Compiler
+- **Vite + React 19 + TypeScript**
+- **React Router v7** (data router with code-splitting)
+- **TanStack Query** for server state
+- **Supabase** for auth, Postgres, and image storage
+- **Radix UI** primitives for dialogs, toasts, forms
+- **react-simple-maps** for the country map
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting started
 
-## Expanding the ESLint configuration
+```bash
+nvm use            # picks up .nvmrc (Node 20+)
+cp .env.example .env.local
+# fill in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+npm install
+npm run dev        # http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Start the Vite dev server |
+| `npm run build` | Type-check and build for production |
+| `npm run preview` | Serve the production build locally |
+| `npm run lint` | Run ESLint |
+| `npm run db:types` | Regenerate `src/types/database.types.ts` from the live Supabase schema (requires Supabase CLI auth and `SUPABASE_PROJECT_ID` env var) |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project layout
+
 ```
+src/
+  pages/           Route-level components (Home, About, Mapa, ...)
+  components/      Shared UI primitives (Loader, Toast, ErrorBoundary)
+  hooks/           Reusable hooks (useAuth, usePhotos, useDocumentTitle, ...)
+  context/         React contexts (AuthProvider)
+  lib/             Service clients and helpers (supabase, countries, uploadImage)
+  types/           Shared types — `database.types.ts` is generated, others are hand-written
+  assets/          Static images bundled with the app
+public/            Static files served as-is (favicon, og-image)
+```
+
+## Database
+
+Single Supabase project. The `Images` table stores adventure photos with metadata (`Name`, `country`, `description`, `image_url`). Files live in the `andariegos` storage bucket.
+
+Type definitions in `src/types/database.types.ts` are scaffolded but should be regenerated against the live schema:
+
+```bash
+export SUPABASE_PROJECT_ID=<project-ref>
+npm run db:types
+```
+
+## Deployment
+
+Vercel — pushes to `main` deploy automatically. Required env vars must be set in the Vercel project settings:
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+
+`vercel.json` provides the SPA fallback so client-side routes resolve.
