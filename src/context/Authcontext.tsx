@@ -1,5 +1,12 @@
 import type { Session, User } from "@supabase/supabase-js";
-import { createContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import { supabase } from "../lib/supabase";
 import type { AuthContextType } from "../types/auth.types";
 
@@ -31,16 +38,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signIn = (email: string, password: string) => {
-    return supabase.auth.signInWithPassword({ email, password });
-  };
-  const signOut = () => {
-    return supabase.auth.signOut();
-  };
+  // Stable references — these never change, so they won't cause consumers
+  // to re-render just because AuthProvider re-rendered.
+  const signIn = useCallback(
+    (email: string, password: string) =>
+      supabase.auth.signInWithPassword({ email, password }),
+    [],
+  );
+  const signOut = useCallback(() => supabase.auth.signOut(), []);
+
+  // Memoize the context value so consumers only re-render when auth state
+  // actually changes (session / user / loading), not on every parent render.
+  const value = useMemo(
+    () => ({ session, user, signIn, signOut, loading }),
+    [session, user, signIn, signOut, loading],
+  );
 
   return (
-    <AuthContext.Provider value={{ session, user, signIn, signOut, loading }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
   );
 };
