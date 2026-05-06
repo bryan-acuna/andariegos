@@ -1,9 +1,9 @@
-import { createContext, useContext, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import type { ReactNode } from "react";
 import * as RadixToast from "@radix-ui/react-toast";
+import { ToastContext } from "./useToast";
+import type { ToastType } from "./useToast";
 import "./Toast.css";
-
-type ToastType = "success" | "error" | "info";
 
 type ToastItem = {
   id: number;
@@ -11,16 +11,6 @@ type ToastItem = {
   title: string;
   description?: string;
 };
-
-type ToastContextValue = {
-  toast: (type: ToastType, title: string, description?: string) => void;
-};
-
-const ToastContext = createContext<ToastContextValue>({ toast: () => {} });
-
-export function useToast() {
-  return useContext(ToastContext);
-}
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<ToastItem[]>([]);

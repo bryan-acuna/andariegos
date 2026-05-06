@@ -5,7 +5,6 @@ import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Loader } from "../../components";
 import type { Photo } from "../../types/photo.types";
-import { thumbUrl } from "../../lib/imageUrl";
 
 const MOBILE_BREAKPOINT = 768;
 const MOBILE_PAGE_SIZE = 5;
@@ -57,7 +56,7 @@ function Montanas() {
         {shown.map((photo) => (
           <img
             key={photo.id}
-            src={thumbUrl(photo.image_url, 600, 75)}
+            src={photo.image_url}
             alt={photo.description ?? ""}
             className="grid-photo"
             loading="lazy"
