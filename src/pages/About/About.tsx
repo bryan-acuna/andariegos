@@ -30,16 +30,6 @@ function About() {
 
   return (
     <div className="about">
-      {loading && <p className="about-loading">Cargando...</p>}
-
-      {!loading && paragraphs.length > 0 && (
-        <div className="about-body">
-          {paragraphs.map((text, i) => (
-            <p key={i}>{text}</p>
-          ))}
-        </div>
-      )}
-
       <details className="about-section" open>
         <summary>Perfil</summary>
         <div className="about-section-body">
@@ -48,6 +38,16 @@ function About() {
             Centroamérica, incluyendo escalada en roca y ascensos de gran
             altitud de hasta 22,000 pies.
           </p>
+
+          {loading && <p className="about-loading">Cargando...</p>}
+
+          {!loading && paragraphs.length > 0 && (
+            <div className="about-body">
+              {paragraphs.map((text, i) => (
+                <p key={i}>{text}</p>
+              ))}
+            </div>
+          )}
         </div>
       </details>
 
