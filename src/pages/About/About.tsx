@@ -33,12 +33,6 @@ function About() {
       <details className="about-section" open>
         <summary>Perfil</summary>
         <div className="about-section-body">
-          <p>
-            Montañista con más de 20 años de experiencia en Norte, Sudamérica y
-            Centroamérica, incluyendo escalada en roca y ascensos de gran
-            altitud de hasta 22,000 pies.
-          </p>
-
           {loading && <p className="about-loading">Cargando...</p>}
 
           {!loading && paragraphs.length > 0 && (
@@ -47,6 +41,10 @@ function About() {
                 <p key={i}>{text}</p>
               ))}
             </div>
+          )}
+
+          {!loading && paragraphs.length === 0 && (
+            <p className="about-empty">Aún no hay contenido.</p>
           )}
         </div>
       </details>
