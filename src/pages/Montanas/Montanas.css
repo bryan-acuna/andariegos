@@ -29,7 +29,20 @@
 }
 
 .grid-sentinel {
-  height: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 1rem 0 2rem;
+}
+
+.grid-load-more {
+  width: 26px;
+  height: 26px;
+  border: 3px solid #e5e5e5;
+  border-top-color: #2d6a4f;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
 }
 
 /* Dialog */

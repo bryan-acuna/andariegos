@@ -1,59 +1,51 @@
 import "./Montanas.css";
-import { useState, useEffect, useRef, useCallback } from "react";
-import { usePhotos } from "../../hooks/usePhotos";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { useInfinitePhotos } from "../../hooks/usePhotos";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Loader } from "../../components";
 import type { Photo } from "../../types/photo.types";
 
-const MOBILE_BREAKPOINT = 768;
-const MOBILE_PAGE_SIZE = 5;
-const DESKTOP_PAGE_SIZE = 10;
-
-function getPageSize() {
-  return window.innerWidth <= MOBILE_BREAKPOINT ? MOBILE_PAGE_SIZE : DESKTOP_PAGE_SIZE;
-}
-
 function Montanas() {
   useDocumentTitle("Montañas · Andariegos");
-  const { data: photos, isLoading, isError } = usePhotos();
+  const {
+    data,
+    isLoading,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfinitePhotos(10);
   const [selected, setSelected] = useState<Photo | null>(null);
-  const [visible, setVisible] = useState(() => getPageSize());
   const sentinelRef = useRef<HTMLDivElement>(null);
 
-  // Reset visible count if the window resizes across the breakpoint
-  useEffect(() => {
-    const onResize = () => setVisible(getPageSize());
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-
-  const loadMore = useCallback(() => {
-    if (!photos) return;
-    setVisible((prev) => Math.min(prev + getPageSize(), photos.length));
-  }, [photos]);
+  const photos = useMemo(
+    () => data?.pages.flat() ?? [],
+    [data]
+  );
 
   useEffect(() => {
     const el = sentinelRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) loadMore(); },
-      { rootMargin: "100px" }
+      ([entry]) => {
+        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { rootMargin: "200px" }
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [loadMore]);
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   if (isLoading) return <Loader />;
   if (isError) return <p className="grid-status">Error al cargar fotos.</p>;
 
-  const shown = photos?.slice(0, visible) ?? [];
-  const hasMore = photos ? visible < photos.length : false;
-
   return (
     <>
       <div className="montanas-grid">
-        {shown.map((photo) => (
+        {photos.map((photo) => (
           <img
             key={photo.id}
             src={photo.image_url}
@@ -66,7 +58,11 @@ function Montanas() {
         ))}
       </div>
 
-      {hasMore && <div ref={sentinelRef} className="grid-sentinel" />}
+      {hasNextPage && (
+        <div ref={sentinelRef} className="grid-sentinel">
+          {isFetchingNextPage && <div className="grid-load-more" aria-label="Cargando más" />}
+        </div>
+      )}
 
       <Dialog.Root open={!!selected} onOpenChange={(open) => !open && setSelected(null)}>
         <Dialog.Portal>

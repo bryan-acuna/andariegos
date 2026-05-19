@@ -21,16 +21,23 @@ const Login = () => {
     if (error) {
       setError(error.message);
     } else {
-      navigate("/");
+      navigate("/admin");
     }
     setIsLoading(false);
+  };
+
+  // ← added: submit on Enter key from any field
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !isLoading) {
+      handleSignIn();
+    }
   };
 
   return (
     <div className="login-page">
       <div className="login-card">
         <h1>Bienvenido</h1>
-        <p className="login-subtitle">Inicia sesión o crea una cuenta</p>
+        <p className="login-subtitle">Inicia sesión</p>
 
         {error && <p className="login-error">{error}</p>}
 
@@ -43,6 +50,7 @@ const Login = () => {
               placeholder="tu@correo.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={handleKeyDown} // ← added
             />
           </div>
           <div className="login-field">
@@ -53,6 +61,7 @@ const Login = () => {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={handleKeyDown} // ← added
             />
           </div>
         </div>

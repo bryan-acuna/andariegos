@@ -1,6 +1,6 @@
 import { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // ← added useNavigate
 
 import "./Admin.css";
 import { useToast, Loader } from "../../components";
@@ -8,6 +8,7 @@ import { useDeletePhoto } from "../../hooks/useDeletePhoto";
 import { useUpdatePhoto } from "../../hooks/useUpdatePhoto";
 import { usePhotos } from "../../hooks/usePhotos";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
+import { useAuth } from "../../hooks/useAuth"; // ← added
 import { COUNTRIES } from "../../lib/countries";
 import type { Photo } from "../../types/photo.types";
 
@@ -67,7 +68,9 @@ function AdminCard({ photo }: { photo: Photo }) {
                 >
                   <option value="">Seleccionar país...</option>
                   {COUNTRIES.map((c) => (
-                    <option key={c} value={c}>{c}</option>
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -108,15 +111,16 @@ function AdminCard({ photo }: { photo: Photo }) {
           ) : (
             <>
               <div className="admin-card-meta">
-                <p className="admin-meta-name">{name || <em className="admin-meta-empty">Sin nombre</em>}</p>
-                <p className="admin-meta-country">{country || <em className="admin-meta-empty">Sin país</em>}</p>
+                <p className="admin-meta-name">
+                  {name || <em className="admin-meta-empty">Sin nombre</em>}
+                </p>
+                <p className="admin-meta-country">
+                  {country || <em className="admin-meta-empty">Sin país</em>}
+                </p>
                 {desc && <p className="admin-meta-desc">{desc}</p>}
               </div>
               <div className="admin-card-actions">
-                <button
-                  className="btn-edit"
-                  onClick={() => setEditing(true)}
-                >
+                <button className="btn-edit" onClick={() => setEditing(true)}>
                   Editar
                 </button>
                 <button
@@ -164,14 +168,31 @@ function AdminCard({ photo }: { photo: Photo }) {
 function Admin() {
   useDocumentTitle("Gestionar fotos · Andariegos");
   const { data: photos, isLoading, isError } = usePhotos();
+  const { signOut } = useAuth(); // ← added
+  const navigate = useNavigate(); // ← added
+
+  const handleLogout = async () => {
+    // ← added
+    await signOut();
+    navigate("/login");
+  };
 
   return (
     <div className="admin-page">
       <div className="admin-header">
         <h1>Gestionar fotos</h1>
-        <Link to="/newadventure" className="btn-add">
-          + Agregar
-        </Link>
+        <div className="admin-header-actions">
+          {" "}
+          {/* ← added wrapper */}
+          <Link to="/newadventure" className="btn-add">
+            + Agregar
+          </Link>
+          <button className="btn-logout" onClick={handleLogout}>
+            {" "}
+            {/* ← added */}
+            Cerrar sesión
+          </button>
+        </div>
       </div>
 
       {isLoading && <Loader />}

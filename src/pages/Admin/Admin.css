@@ -55,7 +55,9 @@
   border-radius: 10px;
   padding: 2rem;
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
   background: #fafafa;
   max-width: 420px;
 }
@@ -105,9 +107,15 @@
 }
 
 @keyframes slide {
-  0%   { transform: translateX(-100%); }
-  50%  { transform: translateX(150%); }
-  100% { transform: translateX(400%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(150%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
 }
 
 /* ── Grid ───────────────────────────────────────── */
@@ -254,7 +262,9 @@
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
 }
 
 .btn-edit:hover {
@@ -293,7 +303,9 @@
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 .btn-delete:hover {
@@ -371,13 +383,23 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: translate(-50%, -48%) scale(0.97); }
-  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
 @media (max-width: 768px) {
@@ -388,4 +410,29 @@
   .admin-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.admin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-logout {
+  padding: 0.5rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1.5px solid #e53e3e;
+  background: transparent;
+  color: #e53e3e;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.btn-logout:hover {
+  background: #e53e3e;
+  color: #fff;
 }

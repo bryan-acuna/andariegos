@@ -1,40 +1,125 @@
-import "./About.css";
+import { useState, useEffect } from "react";
+import { supabase } from "../../lib/supabase";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
+import "./About.css";
 
 function About() {
   useDocumentTitle("Sobre mí · Andariegos");
 
+  const [bio, setBio] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase
+      .from("site_content")
+      .select("value")
+      .eq("key", "about_bio")
+      .single()
+      .then(({ data, error }) => {
+        if (!error && data) setBio(data.value);
+        setLoading(false);
+      });
+  }, []);
+
+  const paragraphs = bio
+    ? bio
+        .split(/\n\s*\n/)
+        .map((p) => p.trim())
+        .filter(Boolean)
+    : [];
+
   return (
     <div className="about">
-      <h1>Sobre mí</h1>
-      <div className="about-body">
-        <p>
-          Mi nombre es Clever Acuña, nací en el año 1970 y soy ingeniero en sistemas.
-          Soy ecuatoriano y actualmente vivo en Houston, Texas.
-        </p>
-        <p>
-          Mi historia con la montaña comenzó en 1986, cuando descubrí en el andinismo una
-          pasión que marcaría mi vida. En aquellos años, mi objetivo era conquistar cumbres,
-          alcanzar nuevas alturas y enfrentar los desafíos que solo las grandes montañas
-          pueden ofrecer.
-        </p>
-        <p>
-          Sin embargo, hace cuatro años mi visión de escalar cambió por completo. Hoy ya no
-          se trata únicamente de llegar a la cima, sino de demostrarme a mí mismo que, aun
-          con impedimentos físicos, soy capaz de seguir adelante y vencer cualquier obstáculo.
-        </p>
-        <p>
-          Cada montaña que escalo representa mucho más que un ascenso: es una prueba de
-          fortaleza, disciplina y determinación. Es mi manera de recordarme que los límites
-          no están en el cuerpo, sino en la mente, y que siempre se puede avanzar con
-          voluntad, esfuerzo y fe en uno mismo.
-        </p>
-        <p>
-          Mi propósito ahora es inspirar con mi historia, demostrar que nunca es tarde para
-          redefinir nuestros sueños y que ninguna dificultad es más grande que la decisión
-          de seguir luchando. Y logrando cumbres.
-        </p>
-      </div>
+      {loading && <p className="about-loading">Cargando...</p>}
+
+      {!loading && paragraphs.length > 0 && (
+        <div className="about-body">
+          {paragraphs.map((text, i) => (
+            <p key={i}>{text}</p>
+          ))}
+        </div>
+      )}
+
+      <details className="about-section" open>
+        <summary>Perfil</summary>
+        <div className="about-section-body">
+          <p>
+            Montañista con más de 20 años de experiencia en Norte, Sudamérica y
+            Centroamérica, incluyendo escalada en roca y ascensos de gran
+            altitud de hasta 22,000 pies.
+          </p>
+        </div>
+      </details>
+
+      <details className="about-section" open>
+        <summary>Experiencia</summary>
+        <div className="about-section-body">
+          <ul className="about-experience">
+            <li>
+              <span className="about-exp-place">Nicaragua — Cerro Asunción</span>
+              <span className="about-exp-year">2026</span>
+            </li>
+            <li>
+              <span className="about-exp-place">Costa Rica — Cerro Chirripó</span>
+              <span className="about-exp-year">2026</span>
+            </li>
+            <li>
+              <span className="about-exp-place">
+                Chile — Cerro Pintor, Volcán Ojos del Salado
+              </span>
+              <span className="about-exp-year">2026</span>
+            </li>
+            <li>
+              <span className="about-exp-place">
+                Bolivia — Volcán Thunupa, Laguna Juri Khota, Laguna Glacial
+                Ventanani, Tuni Condoriri, Laguna Chuiarkhota, Pico Tarija
+              </span>
+              <span className="about-exp-year">2024</span>
+            </li>
+            <li>
+              <span className="about-exp-place">
+                Guatemala — Volcán Tajumulco, Volcán de Cuxliquel, Volcán
+                Concepción
+              </span>
+              <span className="about-exp-year">2024</span>
+            </li>
+            <li>
+              <span className="about-exp-place">Perú — Cordillera Blanca</span>
+              <span className="about-exp-year">2023</span>
+            </li>
+            <li>
+              <span className="about-exp-place">
+                Ecuador — Cotopaxi, Chimborazo, Cayambe, Illiniza Norte y Sur,
+                Ruku Pichincha
+              </span>
+              <span className="about-exp-year">1986 – 2004</span>
+            </li>
+          </ul>
+        </div>
+      </details>
+
+      <details className="about-section">
+        <summary>Habilidades técnicas</summary>
+        <div className="about-section-body">
+          <ul className="about-list">
+            <li>Alpine climbing</li>
+            <li>Snow climbing</li>
+            <li>Trekking</li>
+            <li>Volcanic terrain experience</li>
+            <li>Expedition planning</li>
+          </ul>
+        </div>
+      </details>
+
+      <details className="about-section">
+        <summary>Certificaciones</summary>
+        <div className="about-section-body">
+          <ul className="about-list">
+            <li>CPR / Lugares greatest</li>
+            <li>Houston CERT — grupo de auxilio de desastres naturales</li>
+          </ul>
+        </div>
+      </details>
     </div>
   );
 }

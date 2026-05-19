@@ -13,9 +13,59 @@ function Contact() {
 
   return (
     <div className="contact-page">
-      {/* Left — form */}
+      {/* Left — intro + contact info */}
       <div className="contact-left">
-        <h1>Contactar</h1>
+        <p className="contact-eyebrow">ESTAMOS AQUÍ PARA AYUDARTE</p>
+        <h1 className="contact-title">
+          <strong>Hablemos</strong> sobre tu próxima aventura
+        </h1>
+        <p className="contact-lead">
+          ¿Tienes preguntas o quieres colaborar? Escríbeme y te responderé lo antes posible.
+        </p>
+
+        <div className="contact-info">
+          <div className="contact-info-item">
+            <span className="contact-info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </span>
+            <div>
+              <p className="contact-info-label">Ubicación</p>
+              <p className="contact-info-value">Houston, Texas</p>
+            </div>
+          </div>
+
+          <div className="contact-info-item">
+            <span className="contact-info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </span>
+            <div>
+              <p className="contact-info-label">Email</p>
+              <a className="contact-info-value" href="mailto:clever_a@gmail.com">clever_a@gmail.com</a>
+            </div>
+          </div>
+
+          <div className="contact-info-item">
+            <span className="contact-info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </span>
+            <div>
+              <p className="contact-info-label">Teléfono</p>
+              <a className="contact-info-value" href="tel:+12817931635">281-793-1635</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Right — form card */}
+      <div className="contact-right">
         <Form.Root className="contact-form" onSubmit={handleSubmit}>
           <Form.Field className="form-field" name="nombre">
             <div className="form-label-row">
@@ -56,66 +106,8 @@ function Contact() {
             </Form.Control>
           </Form.Field>
 
-          <Form.Submit className="form-submit">Enviar</Form.Submit>
+          <Form.Submit className="form-submit">Enviar mensaje</Form.Submit>
         </Form.Root>
-      </div>
-
-      {/* Divider */}
-      <div className="contact-divider" />
-
-      {/* Right — socials */}
-      <div className="contact-right">
-        <h1>Sígueme</h1>
-        <div className="social-list">
-          <a
-            href="https://instagram.com/andariegos_mundo"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="social-item"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-              <circle cx="12" cy="12" r="4"/>
-              <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
-            </svg>
-            <div>
-              <p className="social-name">Instagram</p>
-              <p className="social-handle">@andariegos_mundo</p>
-            </div>
-          </a>
-
-          <a
-            href="https://facebook.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="social-item"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-            </svg>
-            <div>
-              <p className="social-name">Facebook</p>
-              <p className="social-handle">Andariegos</p>
-            </div>
-          </a>
-
-          <a
-            href="https://yourwebsite.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="social-item"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="2" y1="12" x2="22" y2="12"/>
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-            </svg>
-            <div>
-              <p className="social-name">Sitio web</p>
-              <p className="social-handle">yourwebsite.com</p>
-            </div>
-          </a>
-        </div>
       </div>
     </div>
   );

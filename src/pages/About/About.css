@@ -20,3 +20,138 @@
   line-height: 1.9;
   color: #213547;
 }
+
+.about-loading,
+.about-empty {
+  color: #666;
+  font-style: italic;
+}
+
+.about-section {
+  margin-top: 1rem;
+  color: #213547;
+  border-bottom: 1.5px solid #e5e7eb;
+}
+
+.about > .about-section:first-of-type {
+  margin-top: 0;
+  border-top: 1.5px solid #e5e7eb;
+}
+
+.about-section > summary {
+  list-style: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #2d6a4f;
+  padding: 1rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  user-select: none;
+  background: #f5f8f6;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.about-section > summary::-webkit-details-marker {
+  display: none;
+}
+
+.about-section > summary::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #2d6a4f;
+  border-bottom: 2px solid #2d6a4f;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  margin-top: -4px;
+  flex-shrink: 0;
+}
+
+.about-section[open] > summary::after {
+  transform: rotate(-135deg);
+  margin-top: 4px;
+}
+
+.about-section > summary:hover {
+  color: #1b4332;
+}
+
+.about-section > summary:hover::after {
+  border-color: #1b4332;
+}
+
+.about-section-body {
+  padding: 0 0 1.25rem;
+}
+
+.about-section p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.about-list,
+.about-experience {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.about-list li {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.about-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2d6a4f;
+}
+
+.about-experience li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px dashed #eef0f2;
+}
+
+.about-experience li:last-child {
+  border-bottom: none;
+}
+
+.about-exp-place {
+  flex: 1;
+}
+
+.about-exp-year {
+  font-weight: 700;
+  color: #2d6a4f;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 600px) {
+  .about-experience li {
+    flex-direction: column;
+    gap: 0.2rem;
+    align-items: flex-start;
+  }
+}

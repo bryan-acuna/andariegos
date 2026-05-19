@@ -1,0 +1,121 @@
+.dashboard-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+}
+
+.dashboard-header h1 {
+  margin: 0 0 0.25rem;
+  font-size: 2rem;
+}
+
+.dashboard-subtitle {
+  margin: 0;
+  color: #666;
+  font-size: 1rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.dashboard-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 2rem;
+  border: 1.5px solid #e8e0d5;
+  border-radius: 12px;
+  background: #faf7f2;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
+  position: relative;
+}
+
+.dashboard-card:hover {
+  border-color: #2d6a4f;
+  box-shadow: 0 4px 20px rgba(45, 106, 79, 0.1);
+  transform: translateY(-2px);
+}
+
+.dashboard-card-icon {
+  width: 56px;
+  height: 56px;
+  background: #fff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  border: 1.5px solid #e8e0d5;
+  color: #2d6a4f;
+}
+
+.dashboard-card h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #213547;
+}
+
+.dashboard-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+.dashboard-card-arrow {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  font-size: 1.2rem;
+  color: #2d6a4f;
+  transition: transform 0.2s;
+}
+
+.dashboard-card:hover .dashboard-card-arrow {
+  transform: translateX(4px);
+}
+
+.btn-logout {
+  padding: 0.5rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1.5px solid #e53e3e;
+  background: transparent;
+  color: #e53e3e;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.btn-logout:hover {
+  background: #e53e3e;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

@@ -13,13 +13,14 @@ import { AuthProvider } from "./context/Authcontext";
 import { useAuth } from "./hooks/useAuth";
 import { ErrorBoundary, Loader, ToastProvider } from "./components";
 
-// Lazy-loaded routes — keep them out of the initial bundle.
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Montanas = lazy(() => import("./pages/Montanas"));
 const Mapa = lazy(() => import("./pages/Mapa"));
 const Login = lazy(() => import("./pages/Login"));
 const Admin = lazy(() => import("./pages/Admin"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard")); // ← added
+const AdminAbout = lazy(() => import("./pages/AdminAbout")); // ← added
 const NewAdventure = lazy(() => import("./pages/NewAdventure"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -34,7 +35,7 @@ const queryClient = new QueryClient({
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const { session, loading } = useAuth();
-  if (loading) return null;
+  if (loading) return <Loader />;
   return session ? children : <Navigate to="/login" replace />;
 };
 
@@ -54,10 +55,20 @@ const router = createBrowserRouter([
       { path: "mapa", element: withSuspense(<Mapa />) },
       { path: "login", element: withSuspense(<Login />) },
       {
-        path: "admin",
+        path: "admin", // ← now dashboard
         element: (
-          <ProtectedRoute>{withSuspense(<Admin />)}</ProtectedRoute>
+          <ProtectedRoute>{withSuspense(<AdminDashboard />)}</ProtectedRoute>
         ),
+      },
+      {
+        path: "admin/about", // ← new
+        element: (
+          <ProtectedRoute>{withSuspense(<AdminAbout />)}</ProtectedRoute>
+        ),
+      },
+      {
+        path: "admin/photos", // ← was "/admin"
+        element: <ProtectedRoute>{withSuspense(<Admin />)}</ProtectedRoute>,
       },
       {
         path: "newadventure",
